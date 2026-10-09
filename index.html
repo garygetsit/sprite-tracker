@@ -255,7 +255,8 @@ document.documentElement.setAttribute('data-skin',skinChoice==='auto'?autoSkin(n
     <div class="row"><span id="status">Tap a variant once for collected, again for mastered (a crown), a third time to clear. Tap a sprite's name for its power and backstory.</span>
       <span class="btns"><label for="skin">Theme</label><select id="skin"></select><button id="reset" type="button">Clear all marks</button></span></div>
     <div><span id="asof">List last updated 2026-10-08.</span> The list is checked for new sprites every day. <span id="note">Honey and Obsession Sprites arrive October 15 and are not listed yet.</span> Sprite list from <a href="https://fortnite.gg/sprites" target="_blank" rel="noopener">Fortnite.GG</a>.</div>
-    <div>App created by Gary Gesell and Claude.</div>
+    <div>App created by Gary Gesell and Claude. <span id="visits"></span></div>
+    <div>Visits are counted anonymously with GoatCounter. No names, sprite lists or personal details are collected.</div>
     <div>This is an unofficial, free, fan-made tool. Portions of the materials used are trademarks and/or copyrighted works of Epic Games, Inc. All rights reserved by Epic. This material is not official and is not endorsed by Epic.</div>
   </div>
 </div>
@@ -653,7 +654,11 @@ renderPlayers();
 
 render();
 loadCatalog();
+/* ---- anonymous visit counting (GoatCounter). The footer total only appears if the public counter is switched on in the GoatCounter settings. ---- */
+window.addEventListener('appinstalled',()=>{ try{ window.goatcounter.count({path:'installed',title:'Added to home screen',event:true}); }catch(e){} });
+fetch('https://garygetsit.goatcounter.com/counter/TOTAL.json').then(r=>r.ok?r.json():null).then(d=>{ if(d&&d.count) $('visits').textContent=d.count+' visits so far.'; }).catch(()=>{});
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
 </script>
+<script data-goatcounter="https://garygetsit.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
