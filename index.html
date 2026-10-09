@@ -134,6 +134,20 @@ h1{font-family:var(--title,var(--display));font-size:var(--title-size,26px);lett
 :root[data-skin="halloween"] .fam.done{border-style:solid}
 :root[data-skin]:not([data-skin="classic"]) .bar i{background:linear-gradient(90deg,var(--accent),var(--have))}
 .banner{display:block;width:100%;height:auto;border-radius:14px;margin-top:12px}
+.players{display:flex;flex-wrap:wrap;gap:6px;padding-top:12px}
+.players button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:7px 14px;font-weight:700;font-size:14px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.players .pl[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.players .ghost{background:transparent;color:var(--muted);border-style:dashed}
+.players .ghost[aria-expanded="true"]{color:var(--fg);border-style:solid}
+.pmanage{margin-top:8px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px;display:grid;gap:10px}
+.prow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.prow label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);flex:1 0 100%}
+.prow input,.prow textarea{flex:1 1 160px;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;color:inherit}
+.prow textarea{flex-basis:100%;font-size:12px;word-break:break-all;resize:vertical}
+.prow button{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:8px 12px;font-weight:700}
+.prow button.warn{border-color:var(--v-bounty);color:var(--v-bounty)}
+#pmsg{margin:0;font-size:13px;color:var(--muted)}
+#pmsg:empty{display:none}
 .foot .btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .foot label{font-weight:700}
 .foot select{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-weight:600;max-width:100%}
@@ -166,6 +180,13 @@ document.documentElement.setAttribute('data-skin',skinChoice==='auto'?autoSkin(n
 </script>
 <div class="wrap">
   <img class="banner" id="banner" alt="" width="1200" height="360" hidden>
+  <div class="players" id="players" role="group" aria-label="Player"></div>
+  <div class="pmanage" id="pmanage" hidden>
+    <div class="prow"><label for="pname">Player name</label><input id="pname" type="text" maxlength="20" autocomplete="off"><button id="psave" type="button">Save name</button></div>
+    <div class="prow"><button id="pbackup" type="button">Copy backup code</button><button id="pdel" type="button">Delete this player</button></div>
+    <div class="prow"><label for="pcode">Restore from a backup code</label><textarea id="pcode" rows="3" placeholder="Paste a backup code here" spellcheck="false"></textarea><button id="prestore" type="button">Restore</button></div>
+    <p id="pmsg" role="status"></p>
+  </div>
   <div class="top">
     <div class="head">
       <h1><span class="deco" id="deco"></span>Sprite Tracker</h1>
@@ -261,10 +282,24 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 
 const LS='sprite-tracker-owned-v1';
 let owned=new Set();
-try{ JSON.parse(localStorage.getItem(LS)||'[]').forEach(id=>typeof id==='string'&&owned.add(id)); }catch(e){}
 const LSM='sprite-tracker-mastered-v1';
 let mastered=new Set();
-try{ JSON.parse(localStorage.getItem(LSM)||'[]').forEach(id=>{ if(typeof id==='string'){ mastered.add(id); owned.add(id); } }); }catch(e){}
+/* ---- players: several people can keep separate checklists on one phone ---- */
+const LSP='sprite-tracker-profiles-v1', LSA='sprite-tracker-active-v1', MAXP=8;
+let profiles=[{id:'p1',name:'Player 1'}], active='p1';
+try{
+  const ps=JSON.parse(localStorage.getItem(LSP)||'null');
+  if(Array.isArray(ps)){ const ok=ps.filter(x=>x&&typeof x.id==='string'&&/^[a-z0-9]+$/.test(x.id)&&typeof x.name==='string').slice(0,MAXP).map(x=>({id:x.id,name:x.name.slice(0,20)||'Player'})); if(ok.length) profiles=ok; }
+  const a=localStorage.getItem(LSA); active=profiles.some(x=>x.id===a)?a:profiles[0].id;
+}catch(e){}
+const keyFor=base=>active==='p1'?base:base+'::'+active;   // the first player keeps the original storage keys
+function loadMarks(){
+  owned=new Set(); mastered=new Set();
+  try{ JSON.parse(localStorage.getItem(keyFor(LS))||'[]').forEach(id=>typeof id==='string'&&owned.add(id)); }catch(e){}
+  try{ JSON.parse(localStorage.getItem(keyFor(LSM))||'[]').forEach(id=>{ if(typeof id==='string'){ mastered.add(id); owned.add(id); } }); }catch(e){}
+}
+function saveProfiles(){ try{ localStorage.setItem(LSP,JSON.stringify(profiles)); localStorage.setItem(LSA,active); }catch(e){} }
+loadMarks();
 const CROWN='<svg class="crown" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 11.500h12l1-7-3.700 2.800L8 2 4.700 7.300 1 4.500zM2.300 12.800h11.400v1.700H2.300z"/></svg>';
 let tab='all', q='', season='', variant='';
 try{ const t=localStorage.getItem(LS+'-tab'); if(['all','need','have','mast'].includes(t)) tab=t; }catch(e){}
@@ -318,8 +353,8 @@ function render(){
 function setStatus(t){ $('status').textContent=t; }
 function changed(){
   let ok=true;
-  try{ localStorage.setItem(LS,JSON.stringify([...owned])); localStorage.setItem(LSM,JSON.stringify([...mastered])); }catch(e){ ok=false; }
-  setStatus(ok?'Saved on this device.':'Could not save on this device. Marks will reset when you close the page.');
+  try{ localStorage.setItem(keyFor(LS),JSON.stringify([...owned])); localStorage.setItem(keyFor(LSM),JSON.stringify([...mastered])); }catch(e){ ok=false; }
+  setStatus(ok?'Saved on this device for '+activeName()+'.':'Could not save on this device. Marks will reset when you close the page.');
 }
 /* ---- the sprite list: sprites.json next to this page, built-in list as the fallback ---- */
 async function loadCatalog(){
@@ -389,6 +424,69 @@ function applySkin(){
   $('banner').addEventListener('error',()=>{ $('banner').hidden=true; });
   applySkin();
 })();
+
+
+const activeName=()=>(profiles.find(x=>x.id===active)||profiles[0]).name;
+let manageOpen=false, delArmed=null, restArmed=null;
+function pmsg(t){ $('pmsg').textContent=t||''; }
+function renderPlayers(){
+  const box=$('players'); box.textContent='';
+  profiles.forEach(pr=>{ const b=document.createElement('button'); b.type='button'; b.className='pl'; b.dataset.pid=pr.id; b.setAttribute('aria-pressed',pr.id===active); b.textContent=pr.name; box.appendChild(b); });
+  if(profiles.length<MAXP){ const add=document.createElement('button'); add.type='button'; add.id='pl-add'; add.className='ghost'; add.textContent='+ Add player'; box.appendChild(add); }
+  const ed=document.createElement('button'); ed.type='button'; ed.id='pl-edit'; ed.className='ghost'; ed.setAttribute('aria-expanded',manageOpen); ed.setAttribute('aria-controls','pmanage'); ed.textContent='Manage'; box.appendChild(ed);
+  $('pmanage').hidden=!manageOpen;
+  if(manageOpen){ $('pname').value=activeName(); $('pdel').hidden=profiles.length<2; }
+}
+function disarm(){ clearTimeout(delArmed); clearTimeout(restArmed); delArmed=restArmed=null; $('pdel').textContent='Delete this player'; $('pdel').classList.remove('warn'); $('prestore').textContent='Restore'; $('prestore').classList.remove('warn'); }
+function switchTo(id){ active=id; saveProfiles(); loadMarks(); disarm(); pmsg(''); renderPlayers(); render(); setStatus('Showing '+activeName()+'’s sprites.'); }
+function makeCode(){
+  const parts=[];
+  for(const f of FAMS){ let o=0,m=0; f.items.forEach((it,k)=>{ if(owned.has(it.id))o|=1<<k; if(mastered.has(it.id))m|=1<<k; }); if(o) parts.push(f.key+'.'+o.toString(16)+'.'+m.toString(16)); }
+  return 'ST1|'+parts.join('|');
+}
+function parseCode(str){
+  const t=String(str).replace(/\s+/g,''); if(t.slice(0,4)!=='ST1|') return null;
+  const o=new Set(), m=new Set();
+  for(const part of t.slice(4).split('|')){ if(!part) continue;
+    const [key,oh,mh]=part.split('.'); const f=FAMS.find(x=>x.key===key); if(!f) continue;
+    const ob=parseInt(oh,16), mb=parseInt(mh||'0',16); if(!(ob>=0)) return null;
+    f.items.forEach((it,k)=>{ if(ob&(1<<k)){ o.add(it.id); if(mb&(1<<k)) m.add(it.id); } });
+  }
+  return {o,m};
+}
+$('players').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  if(b.dataset.pid){ if(b.dataset.pid!==active) switchTo(b.dataset.pid); return; }
+  if(b.id==='pl-edit'){ manageOpen=!manageOpen; disarm(); pmsg(''); renderPlayers(); return; }
+  if(b.id==='pl-add'){
+    const id='p'+Date.now().toString(36); let n=profiles.length+1; while(profiles.some(x=>x.name==='Player '+n)) n++;
+    profiles.push({id,name:'Player '+n}); manageOpen=true; switchTo(id);
+    pmsg('New player added. Type their name and tap Save name.'); $('pname').focus(); $('pname').select();
+  }
+});
+function saveName(){ const v=$('pname').value.trim().slice(0,20); if(!v){ pmsg('Type a name first.'); return; }
+  profiles.find(x=>x.id===active).name=v; saveProfiles(); renderPlayers(); pmsg('Name saved.'); }
+$('psave').addEventListener('click',saveName);
+$('pname').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); saveName(); } });
+$('pdel').addEventListener('click',()=>{
+  if(profiles.length<2) return;
+  if(!delArmed){ $('pdel').textContent='Tap again to delete '+activeName()+' and their marks'; $('pdel').classList.add('warn'); delArmed=setTimeout(disarm,5000); return; }
+  try{ localStorage.removeItem(keyFor(LS)); localStorage.removeItem(keyFor(LSM)); }catch(e){}
+  const gone=activeName(); profiles=profiles.filter(x=>x.id!==active); disarm(); switchTo(profiles[0].id); pmsg(gone+' was deleted.');
+});
+$('pbackup').addEventListener('click',()=>{
+  const code=makeCode(); $('pcode').value=code;
+  const done=()=>pmsg('Backup code for '+activeName()+' copied. Paste it somewhere safe, like your notes.');
+  const manual=()=>{ $('pcode').focus(); $('pcode').select(); pmsg('Copy the code in the box and paste it somewhere safe, like your notes.'); };
+  try{ navigator.clipboard.writeText(code).then(done,manual); }catch(e){ manual(); }
+});
+$('prestore').addEventListener('click',()=>{
+  const r=parseCode($('pcode').value);
+  if(!r){ disarm(); pmsg('That doesn’t look like a backup code. It should start with ST1.'); return; }
+  if(!restArmed){ $('prestore').textContent='Tap again to replace '+activeName()+'’s marks ('+r.o.size+' sprites)'; $('prestore').classList.add('warn'); restArmed=setTimeout(disarm,6000); return; }
+  disarm(); owned=r.o; mastered=r.m; changed(); render(); $('pcode').value=''; pmsg('Restored '+r.o.size+' sprites, '+r.m.size+' mastered, for '+activeName()+'.');
+});
+renderPlayers();
 
 render();
 loadCatalog();
