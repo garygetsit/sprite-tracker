@@ -1,6 +1,6 @@
 // Keeps the tracker working offline. Always tries the network first so updates show up right away.
-const CACHE='sprite-tracker-v2';
-const FILES=['./','index.html','sprites.json','manifest.webmanifest','icon-192.png','icon-512.png','halloween.png'];
+const CACHE='sprite-tracker-v3';
+const FILES=['./','index.html','sprites.json','manifest.webmanifest','icon-192.png','icon-512.png','banner-halloween.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',e=>{
