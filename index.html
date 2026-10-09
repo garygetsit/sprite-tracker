@@ -10,7 +10,7 @@
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Creepster&family=Lilita+One&family=Figtree:wght@400;500;600;700&display=swap">
 <style>
 html{-webkit-text-size-adjust:100%}
 body{margin:0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -92,13 +92,36 @@ h1{font-family:var(--display);font-weight:400;font-size:26px;line-height:1;margi
 .foot button.warn{border-color:var(--v-bounty);color:var(--v-bounty)}
 .foot a{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+/* Halloween skin: one dark look, pumpkin accent, slime-green for collected */
+:root[data-skin="halloween"]{
+  --bg:#150a1d; --surface:#22122e; --sunk:#1a0d24; --line:#472a5c;
+  --fg:#f8ecd8; --muted:#b9a0c6;
+  --accent:#ff7a18; --accent-fg:#1c0d03; --have:#8fe04f; --have-bg:#20361a;
+  --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a;
+  --title:"Creepster","Lilita One",fantasy;
+  color-scheme:dark }
+h1{font-family:var(--title,var(--display));display:flex;align-items:center;gap:8px}
+.deco{display:none;flex:none}
+:root[data-skin="halloween"] .deco{display:block}
+:root[data-skin="halloween"] h1{font-size:31px;letter-spacing:1.5px;color:var(--accent)}
+:root[data-skin="halloween"] .deco.pk{width:24px;height:24px;fill:var(--accent)}
+:root[data-skin="halloween"] .deco.bat{width:30px;height:15px;fill:var(--muted);transform:rotate(-8deg)}
+:root[data-skin="halloween"] .fam{border-style:dashed}
+:root[data-skin="halloween"] .fam.done{border-style:solid}
+:root[data-skin="halloween"] .bar i{background:linear-gradient(90deg,var(--accent),var(--have))}
+.foot .btns{display:flex;gap:8px;flex-wrap:wrap}
 </style>
 </head>
 <body>
+<script>
+(function(){var s=null;try{s=localStorage.getItem('sprite-tracker-skin');}catch(e){}
+ if(s!=='halloween'&&s!=='classic') s=(Date.now()<Date.UTC(2026,10,2,5))?'halloween':'classic';
+ document.documentElement.setAttribute('data-skin',s);})();
+</script>
 <div class="wrap">
   <div class="top">
     <div class="head">
-      <h1>Sprite Tracker</h1>
+      <h1><svg class="deco pk" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 4.600c-1-.9-2.300-1-3.500-.4-1.900.9-3 2.900-3 5.100 0 3 2 5.300 4.500 5.300.7 0 1.400-.2 2-.5.6.3 1.300.5 2 .5 2.500 0 4.500-2.300 4.500-5.300 0-2.200-1.100-4.200-3-5.100-1.200-.6-2.500-.5-3.500.4z"/><path d="M7.200 4c0-1.400.6-2.400 1.800-3l.8 1.300c-.6.4-.9.9-.9 1.700z"/></svg>Sprite Tracker<svg class="deco bat" viewBox="0 0 24 12" aria-hidden="true"><path d="M12 4l1-2.500 1 1.800c2.200-1.600 5.200-2.100 9-1.600-1.500 1-2.500 2.400-2.800 4.100-1.200-.8-2.400-.9-3.600-.2-.6-1-1.500-1.300-2.600-.8-.3 1.500-1 2.700-2 3.600-1-.9-1.700-2.100-2-3.600-1.100-.5-2-.2-2.600.8-1.200-.7-2.400-.6-3.600.2C3.500 4.100 2.500 2.700 1 1.700c3.800-.5 6.800 0 9 1.600l1-1.800z"/></svg></h1>
       <div class="score"><span id="have">0</span> / <span id="total">0</span><small id="pct">0%</small></div>
     </div>
     <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
@@ -121,7 +144,7 @@ h1{font-family:var(--display);font-weight:400;font-size:26px;line-height:1;margi
 
   <div class="foot">
     <div class="row"><span id="status">Tap a sprite to mark it as collected. Marks are saved on this device.</span>
-      <span><button id="reset" type="button">Clear all marks</button></span></div>
+      <span class="btns"><button id="skin" type="button">Theme</button><button id="reset" type="button">Clear all marks</button></span></div>
     <div><span id="asof">List last updated 2026-10-08.</span> The list is checked for new sprites every day. <span id="note">Honey and Obsession Sprites arrive October 15 and are not listed yet.</span> Sprite list from <a href="https://fortnite.gg/sprites" target="_blank" rel="noopener">Fortnite.GG</a>.</div>
     <div>App created by Gary Gesell and Claude.</div>
     <div>This is an unofficial, free, fan-made tool. Portions of the materials used are trademarks and/or copyrighted works of Epic Games, Inc. All rights reserved by Epic. This material is not official and is not endorsed by Epic.</div>
@@ -284,6 +307,15 @@ $('reset').addEventListener('click',()=>{
   clearTimeout(armed); armed=null; b.textContent='Clear all marks'; b.classList.remove('warn');
   owned=new Set(); changed(); render();
 });
+
+function showSkin(){ $('skin').textContent='Theme: '+(document.documentElement.getAttribute('data-skin')==='halloween'?'Halloween':'Classic'); }
+$('skin').addEventListener('click',()=>{
+  const next=document.documentElement.getAttribute('data-skin')==='halloween'?'classic':'halloween';
+  document.documentElement.setAttribute('data-skin',next);
+  try{localStorage.setItem('sprite-tracker-skin',next);}catch(e){}
+  showSkin();
+});
+showSkin();
 
 render();
 loadCatalog();
