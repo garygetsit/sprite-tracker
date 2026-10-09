@@ -72,6 +72,9 @@ h1{font-weight:400;line-height:1.1;margin:0}
 .fam.done{border-color:var(--have)}
 .fh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .fh h2{font-family:var(--display);font-weight:400;font-size:19px;margin:0;line-height:1.1;min-width:0}
+.pic{width:40px;height:40px;border-radius:10px;object-fit:cover;flex:none;border:1px solid var(--line)}
+.bigpic{width:96px;height:96px;border-radius:14px;object-fit:cover;border:1px solid var(--line)}
+.fh h2.ph{display:inline-flex;align-items:center;gap:7px}
 .info-btn{font:inherit;color:inherit;background:none;border:0;padding:0;display:inline-flex;align-items:center;gap:7px;text-align:left}
 .info-btn .i{font-family:var(--body);font-size:11px;font-weight:800;font-style:italic;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--muted);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;flex:none}
 .info-btn[aria-expanded="true"] .i{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
@@ -297,9 +300,11 @@ const VBONUS={'Gold':'Extra XP from eliminations.','Gummy':'+10% Sprite Dust whe
  'Quack':'Shares 50% of its Sprite XP with your other Sprites. A Mastery reward.','Cheat Master':'Any input works on Cheat Code panels.',
  'Loot Hacker':'Better odds of spawning items from your Loot Hacks.','Bounty Hunter':'Chance to find Sprites when you eliminate opponents.',
  'Trick or Treat':'Chance to spawn candy when you open containers.'};
+const PICS=new Set(["8-bit", "adventure", "air", "aura", "batman", "birthday", "blinky", "boss", "burnt-peanut", "bush", "crash-bandicoot", "crown", "demon", "dream", "duck", "dumpster-dive", "earth", "fire", "fishy", "ghost", "grim", "jackrabbit", "jonesy", "killswitch", "king", "klombo", "morgana", "onigiri", "overshield", "pollo", "pond", "punk", "seven", "shadow", "sonic", "spooky-dash", "storm-scout", "striker", "tails", "the-deer", "vampire", "vini-jr", "water", "x-ray", "zero-point"]);   // sprite families that have a picture in img/
+const pic=(f,cls)=>PICS.has(f.key)?`<img class="${cls}" src="img/${f.key}.webp" alt="" width="96" height="96" loading="lazy">`:'';
 const openInfo=new Set();
 function infoHtml(f){
-  let h='<div class="info" id="info-'+f.key+'">';
+  let h='<div class="info" id="info-'+f.key+'">'+pic(f,'bigpic');
   h+='<p><b>Power</b>'+(f.power?esc(f.power):'No details yet.')+'</p>';
   if(f.get) h+='<p><b>Where to find it</b>'+esc(f.get)+'</p>';
   if(f.origin) h+='<p><b>Where it comes from</b>'+esc(f.origin)+'</p>';
@@ -368,7 +373,7 @@ function renderCompare(){
     });
     if(!shown.length) continue;
     any=true;
-    html+=`<section class="fam"><div class="fh"><h2>${esc(f.name)}</h2>`+(f.rarity?`<span class="pill ${f.rarity}">${f.rarity}</span>`:'')+
+    html+=`<section class="fam"><div class="fh"><h2 class="ph">${pic(f,'pic')}${esc(f.name)}</h2>`+(f.rarity?`<span class="pill ${f.rarity}">${f.rarity}</span>`:'')+
       `</div><div class="cmpwrap"><table class="cmp">${head}<tbody>`+
       shown.map(i=>`<tr><th scope="row">${ico(i.v)}${esc(i.v)}</th>`+data.map(d=>d.m.has(i.id)?`<td title="Mastered">${CROWN}</td>`:d.o.has(i.id)?'<td class="y" title="Collected">\u2713</td>':'<td class="n" title="Not collected">\u2013</td>').join('')+'</tr>').join('')+
       `</tbody></table></div></section>`;
@@ -402,7 +407,7 @@ function render(){
     });
     if(!shown.length) continue;
     const done=got===f.items.length;
-    html+=`<section class="fam${done?' done':''}${gotM===f.items.length?' allmast':''}"><div class="fh"><h2><button class="info-btn" type="button" data-info="${f.key}" aria-expanded="${openInfo.has(f.key)}" aria-controls="info-${f.key}">${esc(f.name)}<span class="i" aria-hidden="true">i</span></button></h2>`+
+    html+=`<section class="fam${done?' done':''}${gotM===f.items.length?' allmast':''}"><div class="fh"><h2><button class="info-btn" type="button" data-info="${f.key}" aria-expanded="${openInfo.has(f.key)}" aria-controls="info-${f.key}">${pic(f,'pic')}${esc(f.name)}<span class="i" aria-hidden="true">i</span></button></h2>`+
       (f.rarity?`<span class="pill ${f.rarity}">${f.rarity}</span>`:'')+
       (f.season?`<span class="pill s">${esc(f.season)}</span>`:'')+
       `<span class="fc">${got}/${f.items.length}${gotM?CROWN+gotM:''}</span>`+
