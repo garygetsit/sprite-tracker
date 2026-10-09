@@ -656,7 +656,17 @@ render();
 loadCatalog();
 /* ---- anonymous visit counting (GoatCounter). The footer total only appears if the public counter is switched on in the GoatCounter settings. ---- */
 window.addEventListener('appinstalled',()=>{ try{ window.goatcounter.count({path:'installed',title:'Added to home screen',event:true}); }catch(e){} });
-fetch('https://garygetsit.goatcounter.com/counter/TOTAL.json').then(r=>r.ok?r.json():null).then(d=>{ if(d&&d.count) $('visits').textContent=d.count+' visits so far.'; }).catch(()=>{});
+(function(){
+  // Ask for the site total and for this page's own count, skipping any saved copy of an earlier answer, and show whichever is larger.
+  const base='https://garygetsit.goatcounter.com/counter/', bust='?t='+Date.now();
+  const ask=p=>fetch(base+p+'.json'+bust,{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>d&&d.count!=null?String(d.count):null).catch(()=>null);
+  const num=t=>parseInt(String(t).replace(/[^0-9]/g,''),10)||0;
+  Promise.all([ask('TOTAL'),ask(encodeURIComponent(location.pathname))]).then(a=>{
+    const got=a.filter(x=>x!==null); if(!got.length) return;
+    const best=got.sort((x,y)=>num(y)-num(x))[0];
+    $('visits').textContent=best+(num(best)===1?' visit so far.':' visits so far.');
+  });
+})();
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
 </script>
 <script data-goatcounter="https://garygetsit.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
