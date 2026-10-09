@@ -596,7 +596,7 @@ function tickFx(ts){
     ctx.save(); ctx.translate(b.x*W,y); ctx.scale(sc*(b.v<0?-1:1),sc*flap); ctx.translate(-12,-6); ctx.fillStyle='#0b0512'; ctx.fill(BATP); ctx.restore(); }
 }
 /* Some themes have a short silent video for the banner. The still picture shows until the video is playing, and stays if the phone won't play it. */
-const BANNER_VIDEO={trippy:'banner-trippy.mp4'};
+const BANNER_VIDEO={trippy:'banner-trippy.mp4',halloween:'banner-halloween.mp4'};
 function setBannerVideo(skin){
   const v=$('bvid'), src=BANNER_VIDEO[skin]||'';
   const still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
