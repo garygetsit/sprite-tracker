@@ -81,7 +81,7 @@ h1{font-family:var(--display);font-weight:400;font-size:26px;line-height:1;margi
 .chips{display:flex;flex-wrap:wrap;gap:7px}
 .chip{display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--line);background:var(--bg);border-radius:10px;
   padding:9px 12px;font-weight:600;min-height:42px;text-align:left}
-.chip .dot{width:11px;height:11px;border-radius:3px;flex:none;background:var(--v-base)}
+.chip .ico{width:18px;height:18px;flex:none;fill:currentColor}
 .chip .ck{width:16px;flex:none;font-weight:800;color:var(--have);visibility:hidden}
 .chip[aria-pressed="true"]{background:var(--have-bg);border-color:var(--have)}
 .chip[aria-pressed="true"] .ck{visibility:visible}
@@ -154,6 +154,21 @@ const FAMILIES=[
 ];
 const VCOL={'Base':'base','Gold':'gold','Gummy':'gummy','Galaxy':'galaxy','Gem':'gem','Holofoil':'holo','Cube':'cube','Quack':'quack',
  'Cheat Master':'cheat','Loot Hacker':'loot','Bounty Hunter':'bounty','Trick or Treat':'treat'};
+const ICONS={
+ 'Base':'<path fill-rule="evenodd" d="M8 1.5c3.6 0 6 2.6 6 6.2 0 3.900-2.600 6.800-6 6.800s-6-2.900-6-6.800c0-3.600 2.400-6.200 6-6.200zM5.800 6.800a1.200 1.200 0 1 0 0 2.400a1.200 1.200 0 0 0 0-2.400zM10.200 6.800a1.200 1.200 0 1 0 0 2.400a1.200 1.200 0 0 0 0-2.400z"/>',
+ 'Gold':'<path d="M8 1l2.100 4.400 4.900.7-3.500 3.400.8 4.800L8 12l-4.300 2.300.8-4.800L1 6.100l4.900-.7z"/>',
+ 'Gummy':'<circle cx="4" cy="4.200" r="2.300"/><circle cx="12" cy="4.200" r="2.300"/><circle cx="8" cy="9.200" r="5.600"/>',
+ 'Galaxy':'<circle cx="8" cy="8" r="4"/><ellipse cx="8" cy="8" rx="7.200" ry="2.300" fill="none" stroke="currentColor" stroke-width="1.300" transform="rotate(-22 8 8)"/>',
+ 'Gem':'<path d="M4 2h8l3 4-7 8.500L1 6z"/>',
+ 'Holofoil':'<path d="M6.500 1.500l1.400 3.900 3.900 1.400-3.900 1.400-1.400 3.900-1.400-3.900-3.900-1.400 3.900-1.400z"/><path d="M12.300 9.500l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/>',
+ 'Cube':'<path d="M8 1.300l5.700 3.100L8 7.500 2.300 4.400z"/><path opacity=".7" d="M2 5.700l5.400 2.900v6.100L2 11.800z"/><path opacity=".45" d="M14 5.700L8.600 8.600v6.100l5.400-2.900z"/>',
+ 'Quack':'<ellipse cx="6.800" cy="11" rx="5.600" ry="3.600"/><circle cx="10.300" cy="5.300" r="3.100"/><path d="M12.800 4.600l3 1-3 1.300z"/>',
+ 'Cheat Master':'<path fill="none" stroke="currentColor" stroke-width="1.800" stroke-linecap="round" stroke-linejoin="round" d="M5.300 4.200L1.800 8l3.500 3.800M10.700 4.200L14.200 8l-3.500 3.800M9.200 2.500L6.800 13.500"/>',
+ 'Loot Hacker':'<path d="M2 7V5.500A3.500 3.500 0 0 1 5.500 2h5A3.500 3.500 0 0 1 14 5.500V7z"/><path d="M2 8.300h4.700v1.200a1.300 1.300 0 0 0 2.600 0V8.300H14V14H2z"/>',
+ 'Bounty Hunter':'<circle cx="8" cy="8" r="4.800" fill="none" stroke="currentColor" stroke-width="1.600"/><path fill="none" stroke="currentColor" stroke-width="1.600" stroke-linecap="round" d="M8 1v3.500M8 11.500V15M1 8h3.500M11.500 8H15"/><circle cx="8" cy="8" r="1.200"/>',
+ 'Trick or Treat':'<path d="M8 4.600c-1-.9-2.300-1-3.500-.4-1.900.9-3 2.900-3 5.100 0 3 2 5.300 4.500 5.300.7 0 1.400-.2 2-.5.6.3 1.300.5 2 .5 2.500 0 4.500-2.300 4.500-5.300 0-2.200-1.100-4.200-3-5.100-1.200-.6-2.500-.5-3.500.4z"/><path d="M7.200 4c0-1.400.6-2.400 1.800-3l.8 1.300c-.6.400-.9.900-.9 1.700z"/>'
+};
+const ico=v=>`<svg class="ico" viewBox="0 0 16 16" aria-hidden="true" style="color:var(--v-${VCOL[v]||'base'})">${ICONS[v]||ICONS.Base}</svg>`;
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const BAKED=FAMILIES.map(([n,s,r,v])=>({n,s:'C7 '+s,r,v}));
 let FAMS=[], ALL_IDS=new Set(), TOTAL=0;
@@ -218,7 +233,7 @@ function render(){
       (f.items.length>1?`<button class="allbtn" type="button" data-fam="${f.key}">${done?'Clear':'Got all'}</button>`:'')+
       `</div><div class="chips">`+
       shown.map(i=>`<button class="chip" type="button" data-id="${i.id}" aria-pressed="${owned.has(i.id)}">`+
-        `<span class="dot" style="background:var(--v-${VCOL[i.v]||'base'})"></span>${esc(i.v)}<span class="ck" aria-hidden="true">✓</span></button>`).join('')+
+        ico(i.v)+`${esc(i.v)}<span class="ck" aria-hidden="true">✓</span></button>`).join('')+
       `</div></section>`;
   }
   if(!html){
