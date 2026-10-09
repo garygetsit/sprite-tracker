@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sprite Tracker (unofficial)</title>
+<meta name="description" content="Unofficial fan-made checklist for tracking which Sprites you have collected and which you still need.">
+<meta name="theme-color" content="#5b2be0">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}
+body{margin:0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+/* Layout: phone-first single column. Sticky scoreboard on top, then one row per Sprite family whose variant chips are the checkboxes. */
+:root{
+  --bg:#f3f1fb; --surface:#ffffff; --sunk:#e8e4f6; --line:#d6d0ea;
+  --fg:#1c1638; --muted:#625a85;
+  --accent:#5b2be0; --accent-fg:#ffffff; --have:#12805c; --have-bg:#d9f2e7;
+  --rare:#2f7fe0; --epic:#9a45e6; --legendary:#d97a17; --mythic:#b8930a;
+  --v-base:#8a84a6; --v-gold:#d9a514; --v-gummy:#e75fa3; --v-galaxy:#6a4be0; --v-gem:#17a398;
+  --v-holo:#2aa7dc; --v-cube:#8a2fc9; --v-quack:#e0b800; --v-cheat:#3aa845; --v-loot:#2d6fe0;
+  --v-bounty:#d6453d; --v-treat:#e8761c;
+  --display:"Lilita One","Arial Rounded MT Bold","Trebuchet MS",sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#120e26; --surface:#1d1740; --sunk:#171233; --line:#352c63;
+  --fg:#f1eeff; --muted:#a79fce;
+  --accent:#a98bff; --accent-fg:#150f30; --have:#4fd6a1; --have-bg:#16382f;
+  --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a;
+  color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#120e26; --surface:#1d1740; --sunk:#171233; --line:#352c63;
+  --fg:#f1eeff; --muted:#a79fce;
+  --accent:#a98bff; --accent-fg:#150f30; --have:#4fd6a1; --have-bg:#16382f;
+  --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a;
+  color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.4}
+.wrap{max-width:760px;margin:0 auto;padding-inline:16px;padding-block:0 40px}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);
+  padding-block:12px 10px;display:grid;gap:10px;border-bottom:1px solid var(--line)}
+.head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-family:var(--display);font-weight:400;font-size:26px;line-height:1;margin:0;letter-spacing:.3px}
+.score{font-family:var(--display);font-size:22px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.score small{font-family:var(--body);font-size:13px;font-weight:600;color:var(--muted);margin-left:6px}
+.bar{height:10px;border-radius:99px;background:var(--sunk);overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;width:0;background:var(--have);border-radius:99px;transition:width .25s}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tabs button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 6px;font-weight:700;
+  display:flex;justify-content:center;gap:6px;align-items:baseline;min-width:0}
+.tabs button b{font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.tabs button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.tabs button[aria-pressed="true"] b{color:inherit;opacity:.85}
+
+.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-block:12px 4px}
+.filters input{grid-column:1/-1}
+.filters input,.filters select{width:100%;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.filters input::placeholder{color:var(--muted)}
+
+.list{display:grid;gap:10px;padding-top:10px}
+.fam{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:10px}
+.fam.done{border-color:var(--have)}
+.fh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fh h2{font-family:var(--display);font-weight:400;font-size:19px;margin:0;line-height:1.1;min-width:0}
+.pill{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:99px;border:1.5px solid currentColor}
+.pill.Rare{color:var(--rare)} .pill.Epic{color:var(--epic)} .pill.Legendary{color:var(--legendary)} .pill.Mythic{color:var(--mythic)}
+.pill.s{color:var(--muted);border-color:var(--line)}
+.fc{margin-left:auto;font-weight:700;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.fam.done .fc{color:var(--have)}
+.allbtn{border:1px solid var(--line);background:transparent;border-radius:8px;padding:4px 9px;font-size:12px;font-weight:700;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--line);background:var(--bg);border-radius:10px;
+  padding:9px 12px;font-weight:600;min-height:42px;text-align:left}
+.chip .dot{width:11px;height:11px;border-radius:3px;flex:none;background:var(--v-base)}
+.chip .ck{width:16px;flex:none;font-weight:800;color:var(--have);visibility:hidden}
+.chip[aria-pressed="true"]{background:var(--have-bg);border-color:var(--have)}
+.chip[aria-pressed="true"] .ck{visibility:visible}
+.empty{padding:36px 12px;text-align:center;color:var(--muted);font-weight:600}
+.foot{margin-top:22px;display:grid;gap:10px;color:var(--muted);font-size:13px}
+.foot .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.foot button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 12px;font-weight:700}
+.foot button.warn{border-color:var(--v-bounty);color:var(--v-bounty)}
+.foot a{color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="head">
+      <h1>Sprite Tracker</h1>
+      <div class="score"><span id="have">0</span> / <span id="total">0</span><small id="pct">0%</small></div>
+    </div>
+    <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
+    <div class="tabs" role="group" aria-label="Show">
+      <button id="tab-all" data-tab="all" aria-pressed="true">All <b id="n-all"></b></button>
+      <button id="tab-need" data-tab="need" aria-pressed="false">Still need <b id="n-need"></b></button>
+      <button id="tab-have" data-tab="have" aria-pressed="false">Have <b id="n-have"></b></button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <input id="q" type="search" placeholder="Search sprites, e.g. Sonic or Gold" autocomplete="off" aria-label="Search sprites">
+    <select id="season" aria-label="Season">
+      <option value="">All seasons</option>
+    </select>
+    <select id="variant" aria-label="Variant"><option value="">All variants</option></select>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <div class="foot">
+    <div class="row"><span id="status">Tap a sprite to mark it as collected. Marks are saved on this device.</span>
+      <span><button id="reset" type="button">Clear all marks</button></span></div>
+    <div><span id="asof">List last updated 2026-10-08.</span> The list is checked for new sprites every day. <span id="note">Honey and Obsession Sprites arrive October 15 and are not listed yet.</span> Sprite list from <a href="https://fortnite.gg/sprites" target="_blank" rel="noopener">Fortnite.GG</a>.</div>
+    <div>This is an unofficial, free, fan-made tool. Portions of the materials used are trademarks and/or copyrighted works of Epic Games, Inc. All rights reserved by Epic. This material is not official and is not endorsed by Epic.</div>
+  </div>
+</div>
+
+<script>
+const S4V=['Base','Gold','Cheat Master','Loot Hacker','Bounty Hunter','Trick or Treat'];
+const B=['Base','Gold','Gummy','Galaxy'];
+// [name, season, rarity ('' = not confirmed), variants]
+const FAMILIES=[
+ ['Jonesy','S4','Rare',S4V],['Adventure','S4','Rare',S4V],['Bush','S4','Rare',S4V],['8-Bit','S4','Rare',S4V],
+ ['Onigiri','S4','Rare',S4V],['Overshield','S4','Rare',S4V],['Mega Man','S4','Rare',['Base']],
+ ['Sonic','S4','Epic',S4V],['Tails','S4','Epic',S4V],['Shadow','S4','Epic',S4V],['Killswitch','S4','Epic',S4V],
+ ['Storm Scout','S4','',S4V],['Jackrabbit','S4','Legendary',S4V],['X-Ray','S4','Legendary',S4V],
+ ['Klombo','S4','Mythic',S4V],['Crown','S4','Mythic',S4V],['Spooky Dash','S4','Mythic',S4V],
+ ['Blinky','S4','',S4V],['Birthday','S4','',S4V],['Crash Bandicoot','S4','',S4V],['Pond','S4','',S4V],
+ ['Morgana','S4','',S4V],['Vampire','S4','',S4V],['The Deer','S4','',S4V],['Dumpster Dive','S4','',S4V],
+ ['Water','S3','Rare',[...B,'Gem','Holofoil','Quack']],['Earth','S3','Rare',[...B,'Gem','Cube','Quack']],
+ ['Fire','S3','Rare',[...B,'Holofoil','Cube','Quack']],['Fishy','S3','Rare',[...B,'Cube']],
+ ['Duck','S3','Epic',[...B,'Gem']],['Ghost','S3','Epic',[...B,'Holofoil']],['Demon','S3','Epic',[...B,'Gem']],
+ ['King','S3','Epic',[...B,'Holofoil']],['Striker','S3','Epic',[...B,'Holofoil']],['Aura','S3','Epic',[...B,'Gem']],
+ ['Air','S3','',[...B,'Holofoil']],
+ ['Dream','S3','Legendary',[...B,'Cube']],['Punk','S3','Legendary',[...B,'Cube']],['Boss','S3','Legendary',[...B,'Cube']],
+ ['Seven','S3','Legendary',[...B,'Holofoil']],['Peeky Peely','S3','Legendary',[...B,'Holofoil']],
+ ['Lootin’ Llama','S3','Legendary',[...B,'Gem']],
+ ['Zero Point','S3','Mythic',[...B,'Gem','Holofoil','Cube','Quack']],['Grim','S3','Mythic',[...B,'Gem','Holofoil','Cube']],
+ ['Batman','S3','Mythic',[...B,'Holofoil','Cube']],['Vini Jr.','S3','Mythic',['Base']],['Burnt Peanut','S3','Mythic',['Base']],
+ ['Pollo','S3','Mythic',['Base']],['Ironmouse','S3','Mythic',['Base']],['John Wick','S3','Mythic',['Base']]
+];
+const VCOL={'Base':'base','Gold':'gold','Gummy':'gummy','Galaxy':'galaxy','Gem':'gem','Holofoil':'holo','Cube':'cube','Quack':'quack',
+ 'Cheat Master':'cheat','Loot Hacker':'loot','Bounty Hunter':'bounty','Trick or Treat':'treat'};
+const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const BAKED=FAMILIES.map(([n,s,r,v])=>({n,s:'C7 '+s,r,v}));
+let FAMS=[], ALL_IDS=new Set(), TOTAL=0;
+function setCatalog(list){
+  const fams=[];
+  for(const f of list){
+    if(!f||typeof f.n!=='string'||!Array.isArray(f.v)||!f.v.length) continue;
+    fams.push({name:f.n,season:String(f.s||''),rarity:RARITIES.includes(f.r)?f.r:'',key:slug(f.n),
+      items:f.v.filter(v=>typeof v==='string').map(v=>({v,id:slug(f.n)+'.'+slug(v)}))});
+  }
+  if(!fams.length) return false;
+  FAMS=fams; ALL_IDS=new Set(FAMS.flatMap(f=>f.items.map(i=>i.id))); TOTAL=ALL_IDS.size;
+  fillSelect($('season'),'All seasons',[...new Set(FAMS.map(f=>f.season).filter(Boolean))].sort().reverse(),x=>x);
+  fillSelect($('variant'),'All variants',[...new Set(FAMS.flatMap(f=>f.items.map(i=>i.v)))],x=>x==='Base'?'Base only':x);
+  return true;
+}
+function fillSelect(sel,allLabel,values,label){
+  const cur=sel.value; sel.textContent='';
+  [['',allLabel],...values.map(v=>[v,label(v)])].forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;sel.appendChild(o);});
+  sel.value=values.includes(cur)?cur:'';
+  if(sel.id==='season') season=sel.value; else variant=sel.value;
+}
+const RARITIES=['Rare','Epic','Legendary','Mythic'];
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const LS='sprite-tracker-owned-v1';
+let owned=new Set();
+try{ JSON.parse(localStorage.getItem(LS)||'[]').forEach(id=>typeof id==='string'&&owned.add(id)); }catch(e){}
+let tab='all', q='', season='', variant='';
+try{ const t=localStorage.getItem(LS+'-tab'); if(['all','need','have'].includes(t)) tab=t; }catch(e){}
+
+const $=id=>document.getElementById(id);
+const vsel=$('variant');
+setCatalog(BAKED);
+
+function render(){
+  let have=0; ALL_IDS.forEach(id=>{if(owned.has(id))have++;}); const need=TOTAL-have;
+  $('have').textContent=have; $('total').textContent=TOTAL;
+  $('pct').textContent=Math.floor(have/TOTAL*100)+'%';
+  $('barfill').style.width=(have/TOTAL*100)+'%';
+  $('n-all').textContent=TOTAL; $('n-need').textContent=need; $('n-have').textContent=have;
+  document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.tab===tab));
+  const words=q.toLowerCase().split(/\s+/).filter(Boolean);
+  let html='';
+  for(const f of FAMS){
+    if(season&&f.season!==season) continue;
+    const got=f.items.filter(i=>owned.has(i.id)).length;
+    const shown=f.items.filter(i=>{
+      if(variant&&i.v!==variant) return false;
+      const o=owned.has(i.id);
+      if(tab==='need'&&o) return false;
+      if(tab==='have'&&!o) return false;
+      const text=(i.v+' '+f.name).toLowerCase();
+      return words.every(w=>text.includes(w));
+    });
+    if(!shown.length) continue;
+    const done=got===f.items.length;
+    html+=`<section class="fam${done?' done':''}"><div class="fh"><h2>${esc(f.name)}</h2>`+
+      (f.rarity?`<span class="pill ${f.rarity}">${f.rarity}</span>`:'')+
+      (f.season?`<span class="pill s">${esc(f.season)}</span>`:'')+
+      `<span class="fc">${got}/${f.items.length}</span>`+
+      (f.items.length>1?`<button class="allbtn" type="button" data-fam="${f.key}">${done?'Clear':'Got all'}</button>`:'')+
+      `</div><div class="chips">`+
+      shown.map(i=>`<button class="chip" type="button" data-id="${i.id}" aria-pressed="${owned.has(i.id)}">`+
+        `<span class="dot" style="background:var(--v-${VCOL[i.v]||'base'})"></span>${esc(i.v)}<span class="ck" aria-hidden="true">✓</span></button>`).join('')+
+      `</div></section>`;
+  }
+  if(!html){
+    html=`<div class="empty">${tab==='need'&&!q&&!season&&!variant?'You have every sprite on the list.':
+      tab==='have'&&!q&&!season&&!variant?'Nothing marked yet. Switch to All and tap the sprites you own.':'No sprites match these filters.'}</div>`;
+  }
+  $('list').innerHTML=html;
+}
+
+/* ---- saving: on this device only ---- */
+function setStatus(t){ $('status').textContent=t; }
+function changed(){
+  let ok=true;
+  try{ localStorage.setItem(LS,JSON.stringify([...owned])); }catch(e){ ok=false; }
+  setStatus(ok?'Saved on this device.':'Could not save on this device. Marks will reset when you close the page.');
+}
+/* ---- the sprite list: sprites.json next to this page, built-in list as the fallback ---- */
+async function loadCatalog(){
+  try{
+    const r=await fetch('sprites.json',{cache:'no-cache'});
+    if(!r.ok) return;
+    const d=await r.json();
+    if(d&&Array.isArray(d.families)&&setCatalog(d.families)){
+      if(typeof d.updated==='string') $('asof').textContent='List last updated '+d.updated+'.';
+      $('note').textContent=typeof d.note==='string'?d.note:'';
+      render();
+    }
+  }catch(e){}
+}
+
+document.addEventListener('click',e=>{
+  const chip=e.target.closest('.chip');
+  if(chip){ const id=chip.dataset.id; owned.has(id)?owned.delete(id):owned.add(id); changed(); render(); return; }
+  const all=e.target.closest('.allbtn');
+  if(all){ const f=FAMS.find(x=>x.key===all.dataset.fam); const done=f.items.every(i=>owned.has(i.id));
+    f.items.forEach(i=>done?owned.delete(i.id):owned.add(i.id)); changed(); render(); return; }
+  const tb=e.target.closest('.tabs button');
+  if(tb){ tab=tb.dataset.tab; try{localStorage.setItem(LS+'-tab',tab);}catch(err){} render(); window.scrollTo({top:0}); return; }
+});
+$('q').addEventListener('input',e=>{q=e.target.value;render();});
+$('season').addEventListener('change',e=>{season=e.target.value;render();});
+vsel.addEventListener('change',e=>{variant=e.target.value;render();});
+let armed=null;
+$('reset').addEventListener('click',()=>{
+  const b=$('reset');
+  if(!armed){ b.textContent='Tap again to clear all marks'; b.classList.add('warn');
+    armed=setTimeout(()=>{armed=null;b.textContent='Clear all marks';b.classList.remove('warn');},4000); return; }
+  clearTimeout(armed); armed=null; b.textContent='Clear all marks'; b.classList.remove('warn');
+  owned=new Set(); changed(); render();
+});
+
+render();
+loadCatalog();
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
+</script>
+</body>
+</html>

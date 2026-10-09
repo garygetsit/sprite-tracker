@@ -1,0 +1,618 @@
+{
+ "families": [
+  {
+   "n": "Jonesy",
+   "s": "C7 S4",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Adventure",
+   "s": "C7 S4",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Bush",
+   "s": "C7 S4",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "8-Bit",
+   "s": "C7 S4",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Onigiri",
+   "s": "C7 S4",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Overshield",
+   "s": "C7 S4",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Mega Man",
+   "s": "C7 S4",
+   "r": "Rare",
+   "v": [
+    "Base"
+   ]
+  },
+  {
+   "n": "Sonic",
+   "s": "C7 S4",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Tails",
+   "s": "C7 S4",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Shadow",
+   "s": "C7 S4",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Killswitch",
+   "s": "C7 S4",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Storm Scout",
+   "s": "C7 S4",
+   "r": "",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Jackrabbit",
+   "s": "C7 S4",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "X-Ray",
+   "s": "C7 S4",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Klombo",
+   "s": "C7 S4",
+   "r": "Mythic",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Crown",
+   "s": "C7 S4",
+   "r": "Mythic",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Spooky Dash",
+   "s": "C7 S4",
+   "r": "Mythic",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Blinky",
+   "s": "C7 S4",
+   "r": "",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Birthday",
+   "s": "C7 S4",
+   "r": "",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Crash Bandicoot",
+   "s": "C7 S4",
+   "r": "",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Pond",
+   "s": "C7 S4",
+   "r": "",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Morgana",
+   "s": "C7 S4",
+   "r": "",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Vampire",
+   "s": "C7 S4",
+   "r": "",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "The Deer",
+   "s": "C7 S4",
+   "r": "",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Dumpster Dive",
+   "s": "C7 S4",
+   "r": "",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ]
+  },
+  {
+   "n": "Water",
+   "s": "C7 S3",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Gem",
+    "Holofoil",
+    "Quack"
+   ]
+  },
+  {
+   "n": "Earth",
+   "s": "C7 S3",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Gem",
+    "Cube",
+    "Quack"
+   ]
+  },
+  {
+   "n": "Fire",
+   "s": "C7 S3",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Holofoil",
+    "Cube",
+    "Quack"
+   ]
+  },
+  {
+   "n": "Fishy",
+   "s": "C7 S3",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Cube"
+   ]
+  },
+  {
+   "n": "Duck",
+   "s": "C7 S3",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Gem"
+   ]
+  },
+  {
+   "n": "Ghost",
+   "s": "C7 S3",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Holofoil"
+   ]
+  },
+  {
+   "n": "Demon",
+   "s": "C7 S3",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Gem"
+   ]
+  },
+  {
+   "n": "King",
+   "s": "C7 S3",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Holofoil"
+   ]
+  },
+  {
+   "n": "Striker",
+   "s": "C7 S3",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Holofoil"
+   ]
+  },
+  {
+   "n": "Aura",
+   "s": "C7 S3",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Gem"
+   ]
+  },
+  {
+   "n": "Air",
+   "s": "C7 S3",
+   "r": "",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Holofoil"
+   ]
+  },
+  {
+   "n": "Dream",
+   "s": "C7 S3",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Cube"
+   ]
+  },
+  {
+   "n": "Punk",
+   "s": "C7 S3",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Cube"
+   ]
+  },
+  {
+   "n": "Boss",
+   "s": "C7 S3",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Cube"
+   ]
+  },
+  {
+   "n": "Seven",
+   "s": "C7 S3",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Holofoil"
+   ]
+  },
+  {
+   "n": "Peeky Peely",
+   "s": "C7 S3",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Holofoil"
+   ]
+  },
+  {
+   "n": "Lootin’ Llama",
+   "s": "C7 S3",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Gem"
+   ]
+  },
+  {
+   "n": "Zero Point",
+   "s": "C7 S3",
+   "r": "Mythic",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Gem",
+    "Holofoil",
+    "Cube",
+    "Quack"
+   ]
+  },
+  {
+   "n": "Grim",
+   "s": "C7 S3",
+   "r": "Mythic",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Gem",
+    "Holofoil",
+    "Cube"
+   ]
+  },
+  {
+   "n": "Batman",
+   "s": "C7 S3",
+   "r": "Mythic",
+   "v": [
+    "Base",
+    "Gold",
+    "Gummy",
+    "Galaxy",
+    "Holofoil",
+    "Cube"
+   ]
+  },
+  {
+   "n": "Vini Jr.",
+   "s": "C7 S3",
+   "r": "Mythic",
+   "v": [
+    "Base"
+   ]
+  },
+  {
+   "n": "Burnt Peanut",
+   "s": "C7 S3",
+   "r": "Mythic",
+   "v": [
+    "Base"
+   ]
+  },
+  {
+   "n": "Pollo",
+   "s": "C7 S3",
+   "r": "Mythic",
+   "v": [
+    "Base"
+   ]
+  },
+  {
+   "n": "Ironmouse",
+   "s": "C7 S3",
+   "r": "Mythic",
+   "v": [
+    "Base"
+   ]
+  },
+  {
+   "n": "John Wick",
+   "s": "C7 S3",
+   "r": "Mythic",
+   "v": [
+    "Base"
+   ]
+  }
+ ],
+ "updated": "2026-10-08",
+ "note": "Honey and Obsession Sprites arrive October 15 and are not listed yet."
+}
