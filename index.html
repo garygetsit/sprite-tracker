@@ -167,6 +167,16 @@ table.cmp{border-collapse:collapse;width:100%;font-size:14px}
 .players .pl[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
 .players .ghost{background:transparent;color:var(--muted);border-style:dashed}
 .players .ghost[aria-expanded="true"]{color:var(--fg);border-style:solid}
+.players button{display:inline-flex;align-items:center;gap:7px}
+.plph{width:24px;height:24px;border-radius:50%;object-fit:cover;flex:none;margin-left:-6px}
+.pphoto{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--line)}
+.sharebox{margin-top:8px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px;display:grid;gap:10px;justify-items:center}
+.sharebox img{width:100%;max-width:340px;height:auto;border-radius:12px;border:1px solid var(--line)}
+.sharebox .prow{justify-content:center}
+.btnlink{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:8px 12px;font-weight:700;color:inherit;text-decoration:none}
+#sharemsg{margin:0;font-size:13px;color:var(--muted);text-align:center}
+#sharemsg:empty{display:none}
+.brow .nm img{width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:-5px;margin-right:6px}
 .pmanage{margin-top:8px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px;display:grid;gap:10px}
 .prow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .prow label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);flex:1 0 100%}
@@ -217,9 +227,15 @@ document.documentElement.setAttribute('data-skin',skinChoice==='auto'?autoSkin(n
   <div class="players" id="players" role="group" aria-label="Player"></div>
   <div class="pmanage" id="pmanage" hidden>
     <div class="prow"><label for="pname">Player name</label><input id="pname" type="text" maxlength="20" autocomplete="off"><button id="psave" type="button">Save name</button></div>
+    <div class="prow"><label>Photo</label><img id="pphoto" class="pphoto" alt="" hidden><input id="pfile" type="file" accept="image/*" hidden><button id="ppick" type="button">Choose photo</button><button id="pclear" type="button">Remove photo</button></div>
     <div class="prow"><button id="pbackup" type="button">Copy backup code</button><button id="pdel" type="button">Delete this player</button></div>
     <div class="prow"><label for="pcode">Restore from a backup code</label><textarea id="pcode" rows="3" placeholder="Paste a backup code here" spellcheck="false"></textarea><button id="prestore" type="button">Restore</button></div>
     <p id="pmsg" role="status"></p>
+  </div>
+  <div class="sharebox" id="sharebox" hidden>
+    <img id="shareimg" alt="Progress card">
+    <div class="prow"><button id="sharego" type="button">Share</button><a id="sharesave" class="btnlink" download="sprite-tracker-card.png">Save picture</a><button id="shareclose" type="button">Close</button></div>
+    <p id="sharemsg" role="status"></p>
   </div>
   <div class="top">
     <div class="head">
@@ -364,7 +380,7 @@ function renderCompare(){
   document.querySelectorAll('#cmpbar button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.cmp===cmpFilter));
   let html='<section class="board"><h2>Scoreboard</h2>';
   data.forEach(d=>{ let h=0,m=0; ALL_IDS.forEach(id=>{ if(d.o.has(id))h++; if(d.m.has(id))m++; });
-    html+=`<div class="brow"><span class="nm">${esc(d.pr.name)}</span><span class="ct">${h} / ${TOTAL}${CROWN}${m}</span><span class="bar" aria-hidden="true"><i style="width:${h/TOTAL*100}%"></i></span></div>`; });
+    html+=`<div class="brow"><span class="nm">${getPhoto(d.pr.id)?`<img src="${getPhoto(d.pr.id)}" alt="">`:''}${esc(d.pr.name)}</span><span class="ct">${h} / ${TOTAL}${CROWN}${m}</span><span class="bar" aria-hidden="true"><i style="width:${h/TOTAL*100}%"></i></span></div>`; });
   html+='</section>';
   const words=q.toLowerCase().split(/\s+/).filter(Boolean);
   const head='<thead><tr><th></th>'+data.map(d=>`<th scope="col" class="${d.pr.id===active?'me':''}" title="${esc(d.pr.name)}">${esc(d.pr.name)}</th>`).join('')+'</tr></thead>';
@@ -587,20 +603,99 @@ function applySkin(){
 })();
 
 
+
+/* ---- player photos: kept on this phone only, shrunk to a small square ---- */
+const photoKey=id=>'sprite-tracker-photo::'+id;
+function getPhoto(id){ try{ const v=localStorage.getItem(photoKey(id)); return v&&v.slice(0,11)==='data:image/'&&!/["<>\s]/.test(v)?v:''; }catch(e){ return ''; } }
+$('ppick').addEventListener('click',()=>$('pfile').click());
+$('pfile').addEventListener('change',()=>{
+  const f=$('pfile').files&&$('pfile').files[0]; $('pfile').value=''; if(!f) return;
+  const url=URL.createObjectURL(f), im=new Image();
+  im.onload=()=>{ const n=200, c=document.createElement('canvas'); c.width=c.height=n; const m=Math.min(im.naturalWidth,im.naturalHeight);
+    c.getContext('2d').drawImage(im,(im.naturalWidth-m)/2,(im.naturalHeight-m)/2,m,m,0,0,n,n); URL.revokeObjectURL(url);
+    try{ localStorage.setItem(photoKey(active),c.toDataURL('image/jpeg',.85)); pmsg('Photo saved for '+activeName()+'. It stays on this phone.'); }
+    catch(e){ pmsg('Could not save the photo on this phone. Storage may be full.'); }
+    renderPlayers(); if(compare) render(); };
+  im.onerror=()=>{ URL.revokeObjectURL(url); pmsg('That file could not be read as a picture. Try a different photo.'); };
+  im.src=url;
+});
+$('pclear').addEventListener('click',()=>{ try{ localStorage.removeItem(photoKey(active)); }catch(e){} pmsg('Photo removed.'); renderPlayers(); if(compare) render(); });
+
+/* ---- share card: a picture of the selected player's progress ---- */
+const RCOL={Rare:'#62a6ff',Epic:'#c48bff',Legendary:'#ffab52',Mythic:'#f2cf4a'};
+let shareFile=null, shareUrl='';
+const loadImg=src=>new Promise(res=>{ if(!src){ res(null); return; } const im=new Image(); im.onload=()=>res(im); im.onerror=()=>res(null); im.src=src; });
+function rr(x,X,Y,w,h,r){ x.beginPath(); x.moveTo(X+r,Y); x.arcTo(X+w,Y,X+w,Y+h,r); x.arcTo(X+w,Y+h,X,Y+h,r); x.arcTo(X,Y+h,X,Y,r); x.arcTo(X,Y,X+w,Y,r); x.closePath(); }
+async function drawCard(){
+  const W=1080,H=1350,c=document.createElement('canvas'); c.width=W; c.height=H; const x=c.getContext('2d');
+  try{ if(document.fonts&&document.fonts.load) await Promise.race([Promise.all([document.fonts.load('64px "Lilita One"'),document.fonts.load('600 36px Figtree')]),new Promise(r=>setTimeout(r,1500))]); }catch(e){}
+  const DF='"Lilita One","Arial Rounded MT Bold","Trebuchet MS",sans-serif', BF='Figtree,system-ui,-apple-system,"Segoe UI",sans-serif';
+  const name=activeName(); let have=0,mast=0,done=0; const rar={};
+  for(const f of FAMS){ const k=f.rarity||'Other'; rar[k]=rar[k]||[0,0]; let all=true;
+    for(const it of f.items){ rar[k][1]++; if(owned.has(it.id)){ have++; rar[k][0]++; } else all=false; if(mastered.has(it.id)) mast++; }
+    if(all) done++; }
+  const g=x.createLinearGradient(0,0,W,H); g.addColorStop(0,'#5a34a8'); g.addColorStop(1,'#150a2e'); x.fillStyle=g; x.fillRect(0,0,W,H);
+  x.globalAlpha=.07; x.fillStyle='#fff'; for(let i=0;i<40;i++){ x.beginPath(); x.arc((i*263)%W,(i*397)%H,2+(i%4),0,6.283); x.fill(); } x.globalAlpha=1;
+  const [icon,photo]=await Promise.all([loadImg('grim-192.png'),loadImg(getPhoto(active))]);
+  if(icon){ x.save(); rr(x,60,54,112,112,26); x.clip(); x.drawImage(icon,60,54,112,112); x.restore(); }
+  x.textBaseline='alphabetic'; x.textAlign='left'; x.fillStyle='#fff'; x.font='64px '+DF; x.fillText('Sprite Tracker',196,122);
+  x.fillStyle='#c9bdf0'; x.font='500 30px '+BF; x.fillText('Unofficial fan-made checklist',198,162);
+  const cx=W/2, cy=400, R=150;
+  x.beginPath(); x.arc(cx,cy,R+10,0,6.283); x.fillStyle=mast?'#f2c94c':'#4fd6a1'; x.fill();
+  x.save(); x.beginPath(); x.arc(cx,cy,R,0,6.283); x.clip();
+  if(photo){ x.drawImage(photo,cx-R,cy-R,R*2,R*2); }
+  else { x.fillStyle='#7a45f0'; x.fillRect(cx-R,cy-R,R*2,R*2); x.fillStyle='#fff'; x.font='170px '+DF; x.textAlign='center'; x.fillText((name.trim()[0]||'?').toUpperCase(),cx,cy+58); }
+  x.restore();
+  x.textAlign='center'; x.fillStyle='#fff'; let fs=88; x.font=fs+'px '+DF; while(x.measureText(name).width>W-160&&fs>40){ fs-=4; x.font=fs+'px '+DF; } x.fillText(name,cx,650);
+  x.font='128px '+DF; x.fillStyle='#fff'; x.fillText(have+' / '+TOTAL,cx,800);
+  x.font='600 38px '+BF; x.fillStyle='#c9bdf0'; x.fillText('sprites collected',cx,852);
+  rr(x,140,884,800,36,18); x.fillStyle='rgba(255,255,255,.14)'; x.fill();
+  if(have){ const w=Math.max(36,800*have/TOTAL); const pg=x.createLinearGradient(140,0,940,0); pg.addColorStop(0,'#4fd6a1'); pg.addColorStop(1,'#b9ffd9'); rr(x,140,884,w,36,18); x.fillStyle=pg; x.fill(); }
+  x.font='60px '+DF; const mt=mast+' mastered', mw=x.measureText(mt).width, cs=3.6, cw=16*cs, sx=cx-(mw+cw+18)/2;
+  x.save(); x.translate(sx,958); x.scale(cs,cs); x.fillStyle='#f2c94c'; x.fill(new Path2D('M2 11.5h12l1-7-3.700 2.800L8 2 4.700 7.300 1 4.500zM2.300 12.800h11.400v1.700H2.300z')); x.restore();
+  x.textAlign='left'; x.fillStyle='#f2c94c'; x.fillText(mt,sx+cw+18,1008);
+  x.textAlign='center'; x.font='600 36px '+BF; x.fillStyle='#c9bdf0'; x.fillText(done+(done===1?' sprite family':' sprite families')+' complete',cx,1062);
+  const keys=['Rare','Epic','Legendary','Mythic'].filter(k=>rar[k]), cwid=(W-160)/keys.length;
+  keys.forEach((k,i)=>{ const X=80+i*cwid, mid=X+cwid/2, a=rar[k][0], b=rar[k][1];
+    x.textAlign='center'; x.font='700 30px '+BF; x.fillStyle=RCOL[k]; x.fillText(k.toUpperCase(),mid,1128);
+    x.font='52px '+DF; x.fillStyle='#fff'; x.fillText(a+'/'+b,mid,1186);
+    rr(x,X+24,1204,cwid-48,14,7); x.fillStyle='rgba(255,255,255,.14)'; x.fill();
+    if(a){ rr(x,X+24,1204,Math.max(14,(cwid-48)*a/b),14,7); x.fillStyle=RCOL[k]; x.fill(); } });
+  x.font='500 28px '+BF; x.fillStyle='#a79fce'; x.textAlign='left'; x.fillText(new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}),60,1300);
+  x.textAlign='right'; x.fillText(location.host+location.pathname.replace(/\/$/,''),W-60,1300);
+  return c;
+}
+async function openShare(){
+  const box=$('sharebox'); box.hidden=false; $('sharemsg').textContent='Making '+activeName()+'’s card…';
+  try{
+    const cv=await drawCard(), blob=await new Promise(r=>cv.toBlob(r,'image/png'));
+    if(shareUrl) URL.revokeObjectURL(shareUrl);
+    shareUrl=URL.createObjectURL(blob); $('shareimg').src=shareUrl; $('sharesave').href=shareUrl;
+    shareFile=null; try{ shareFile=new File([blob],'sprite-tracker-card.png',{type:'image/png'}); }catch(e){}
+    const can=!!(shareFile&&navigator.canShare&&navigator.canShare({files:[shareFile]}));
+    $('sharego').hidden=!can;
+    $('sharemsg').textContent=can?'Tap Share to send it by text, or Save picture to keep it.':'Tap Save picture, or press and hold the card to save it, then send it by text.';
+    box.scrollIntoView({block:'nearest'});
+  }catch(e){ $('sharemsg').textContent='Could not make the card on this phone.'; }
+}
+$('sharego').addEventListener('click',()=>{ if(!shareFile) return; navigator.share({files:[shareFile],title:'My Sprite Tracker progress',text:activeName()+'’s sprite collection'}).catch(()=>{}); });
+$('shareclose').addEventListener('click',()=>{ $('sharebox').hidden=true; });
+
 const activeName=()=>(profiles.find(x=>x.id===active)||profiles[0]).name;
 let manageOpen=false, delArmed=null, restArmed=null;
 function pmsg(t){ $('pmsg').textContent=t||''; }
 function renderPlayers(){
   const box=$('players'); box.textContent='';
-  profiles.forEach(pr=>{ const b=document.createElement('button'); b.type='button'; b.className='pl'; b.dataset.pid=pr.id; b.setAttribute('aria-pressed',pr.id===active); b.textContent=pr.name; box.appendChild(b); });
+  profiles.forEach(pr=>{ const b=document.createElement('button'); b.type='button'; b.className='pl'; b.dataset.pid=pr.id; b.setAttribute('aria-pressed',pr.id===active); b.textContent=pr.name; const ph=getPhoto(pr.id); if(ph){ const im=document.createElement('img'); im.src=ph; im.alt=''; im.className='plph'; b.prepend(im); } box.appendChild(b); });
   if(profiles.length<MAXP){ const add=document.createElement('button'); add.type='button'; add.id='pl-add'; add.className='ghost'; add.textContent='+ Add player'; box.appendChild(add); }
   if(profiles.length>1){ const c=document.createElement('button'); c.type='button'; c.id='pl-cmp'; c.className='ghost'; c.setAttribute('aria-pressed',compare); c.setAttribute('aria-expanded',compare); c.textContent=compare?'Back to list':'Compare'; box.appendChild(c); }
+  { const sh=document.createElement('button'); sh.type='button'; sh.id='pl-share'; sh.className='ghost'; sh.textContent='Share card'; box.appendChild(sh); }
   const ed=document.createElement('button'); ed.type='button'; ed.id='pl-edit'; ed.className='ghost'; ed.setAttribute('aria-expanded',manageOpen); ed.setAttribute('aria-controls','pmanage'); ed.textContent='Manage'; box.appendChild(ed);
   $('pmanage').hidden=!manageOpen;
-  if(manageOpen){ $('pname').value=activeName(); $('pdel').hidden=profiles.length<2; }
+  if(manageOpen){ $('pname').value=activeName(); $('pdel').hidden=profiles.length<2; const ph=getPhoto(active); $('pphoto').hidden=!ph; if(ph) $('pphoto').src=ph; $('pclear').hidden=!ph; $('ppick').textContent=ph?'Change photo':'Choose photo'; }
 }
 function disarm(){ clearTimeout(delArmed); clearTimeout(restArmed); delArmed=restArmed=null; $('pdel').textContent='Delete this player'; $('pdel').classList.remove('warn'); $('prestore').textContent='Restore'; $('prestore').classList.remove('warn'); }
-function switchTo(id){ active=id; saveProfiles(); loadMarks(); disarm(); pmsg(''); renderPlayers(); render(); setStatus('Showing '+activeName()+'’s sprites.'); }
+function switchTo(id){ $('sharebox').hidden=true; active=id; saveProfiles(); loadMarks(); disarm(); pmsg(''); renderPlayers(); render(); setStatus('Showing '+activeName()+'’s sprites.'); }
 function makeCode(){
   const parts=[];
   for(const f of FAMS){ let o=0,m=0; f.items.forEach((it,k)=>{ if(owned.has(it.id))o|=1<<k; if(mastered.has(it.id))m|=1<<k; }); if(o) parts.push(f.key+'.'+o.toString(16)+'.'+m.toString(16)); }
@@ -619,6 +714,7 @@ function parseCode(str){
 $('players').addEventListener('click',e=>{
   const b=e.target.closest('button'); if(!b) return;
   if(b.dataset.pid){ if(b.dataset.pid!==active) switchTo(b.dataset.pid); return; }
+  if(b.id==='pl-share'){ openShare(); return; }
   if(b.id==='pl-edit'){ manageOpen=!manageOpen; disarm(); pmsg(''); renderPlayers(); return; }
   if(b.id==='pl-cmp'){ compare=!compare; renderPlayers(); render(); setStatus(compare?'Comparing all players on this phone. Tap Back to list to mark sprites.':'Showing '+activeName()+'\u2019s sprites.'); return; }
   if(b.id==='pl-add'){
@@ -635,7 +731,7 @@ $('pname').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault
 $('pdel').addEventListener('click',()=>{
   if(profiles.length<2) return;
   if(!delArmed){ $('pdel').textContent='Tap again to delete '+activeName()+' and their marks'; $('pdel').classList.add('warn'); delArmed=setTimeout(disarm,5000); return; }
-  try{ localStorage.removeItem(keyFor(LS)); localStorage.removeItem(keyFor(LSM)); }catch(e){}
+  try{ localStorage.removeItem(keyFor(LS)); localStorage.removeItem(keyFor(LSM)); localStorage.removeItem(photoKey(active)); }catch(e){}
   const gone=activeName(); profiles=profiles.filter(x=>x.id!==active); disarm(); switchTo(profiles[0].id); pmsg(gone+' was deleted.');
 });
 $('pbackup').addEventListener('click',()=>{
