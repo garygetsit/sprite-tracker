@@ -889,7 +889,9 @@ window.addEventListener('appinstalled',()=>{ try{ window.goatcounter.count({path
   const base='https://garygetsit.goatcounter.com/counter/', bust='?t='+Date.now();
   const ask=p=>fetch(base+p+'.json'+bust,{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>d&&d.count!=null?String(d.count):null).catch(()=>null);
   const num=t=>parseInt(String(t).replace(/[^0-9]/g,''),10)||0;
-  Promise.all([ask('TOTAL'),ask(encodeURIComponent(location.pathname))]).then(a=>{
+  // GoatCounter files visits under the page address without its trailing slash, so ask for that form as well.
+  const pth=location.pathname, bare=pth.replace(/\/+$/,'')||'/';
+  Promise.all([ask('TOTAL'),ask(encodeURIComponent(bare)),ask(encodeURIComponent(pth))]).then(a=>{
     const got=a.filter(x=>x!==null); if(!got.length) return;
     const best=got.sort((x,y)=>num(y)-num(x))[0];
     $('visits').textContent=best+(num(best)===1?' visit so far.':' visits so far.');
