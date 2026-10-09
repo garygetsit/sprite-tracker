@@ -665,6 +665,7 @@ const CARD_BGS={
  loot:{name:'Loot beams',panel:.5,draw(x,W,H){ const r=rng(3); x.fillStyle=lin(x,0,0,0,H,['#0b1d4d','#1565c0','#4fc3f7']); x.fillRect(0,0,W,H);
    for(let i=0;i<9;i++){ const cx=r()*W, cy=r()*H*.5; x.globalAlpha=.5; for(let k=0;k<4;k++) glow(x,cx+k*70-100,cy+(k%2)*24,130,'rgba(255,255,255,.55)'); } x.globalAlpha=1;
    x.globalCompositeOperation='lighter'; [['#62a6ff',150],['#c48bff',400],['#ffab52',680],['#f2cf4a',930]].forEach(([c,bx],i)=>{ const w=120+i*14; x.fillStyle=lin(x,0,H,0,H*.12,[c,'rgba(0,0,0,0)']); x.globalAlpha=.85; x.beginPath(); x.moveTo(bx-w*.35,H); x.lineTo(bx+w*.35,H); x.lineTo(bx+w,H*.1); x.lineTo(bx-w,H*.1); x.fill(); }); }},
+ sprites:{name:'Trippy sprites',panel:.6,img:'card-trippy.jpg',draw(x,W,H,im){ if(im) x.drawImage(im,0,0,W,H); else { x.fillStyle=lin(x,0,0,W,H,['#ff3fd4','#7a2cff','#12051f']); x.fillRect(0,0,W,H); } }},
  party:{name:'Piñata party',panel:.55,draw(x,W,H){ const r=rng(9), cols=['#ff5fc1','#ffb3e6','#35d0e0','#7a5cff','#ffe14a']; x.save(); x.translate(W/2,H/2); x.rotate(-.5);
    for(let i=-14;i<14;i++){ x.fillStyle=cols[((i%5)+5)%5]; x.fillRect(-1400,i*110,2800,110); for(let k=-1400;k<1400;k+=70){ x.beginPath(); x.arc(k+35,i*110+110,35,0,3.1416); x.fill(); } } x.restore();
    for(let i=0;i<90;i++){ x.save(); x.translate(r()*W,r()*H); x.rotate(r()*6.28); x.fillStyle=['#ffffff','#ffe14a','#12051f'][i%3]; if(i%2) x.fillRect(-13,-5,26,10); else { x.beginPath(); x.moveTo(0,-14); x.lineTo(13,10); x.lineTo(-13,10); x.fill(); } x.restore(); } }}
@@ -686,7 +687,8 @@ async function drawCard(){
     for(const it of f.items){ rar[k][1]++; if(owned.has(it.id)){ have++; rar[k][0]++; } else all=false; if(mastered.has(it.id)) mast++; }
     if(all) done++; }
   const bg=CARD_BGS[cardBg]||CARD_BGS.classic;
-  x.save(); bg.draw(x,W,H); x.restore(); x.globalAlpha=1; x.globalCompositeOperation='source-over'; x.shadowBlur=0;
+  const bgImg=bg.img?await loadImg(bg.img):null;
+  x.save(); bg.draw(x,W,H,bgImg); x.restore(); x.globalAlpha=1; x.globalCompositeOperation='source-over'; x.shadowBlur=0;
   if(bg.panel){ rr(x,34,34,W-68,H-68,44); x.fillStyle='rgba(14,7,34,'+bg.panel+')'; x.fill(); x.lineWidth=3; x.strokeStyle='rgba(255,255,255,.28)'; x.stroke(); }
   const [icon,photo]=await Promise.all([loadImg('grim-192.png'),loadImg(getPhoto(active))]);
   if(icon){ x.save(); rr(x,60,54,112,112,26); x.clip(); x.drawImage(icon,60,54,112,112); x.restore(); }
