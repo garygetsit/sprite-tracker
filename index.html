@@ -300,7 +300,7 @@ const VBONUS={'Gold':'Extra XP from eliminations.','Gummy':'+10% Sprite Dust whe
  'Quack':'Shares 50% of its Sprite XP with your other Sprites. A Mastery reward.','Cheat Master':'Any input works on Cheat Code panels.',
  'Loot Hacker':'Better odds of spawning items from your Loot Hacks.','Bounty Hunter':'Chance to find Sprites when you eliminate opponents.',
  'Trick or Treat':'Chance to spawn candy when you open containers.'};
-const PICS=new Set(["8-bit", "adventure", "air", "aura", "batman", "birthday", "blinky", "boss", "burnt-peanut", "bush", "crash-bandicoot", "crown", "demon", "dream", "duck", "dumpster-dive", "earth", "fire", "fishy", "ghost", "grim", "jackrabbit", "jonesy", "killswitch", "king", "klombo", "morgana", "onigiri", "overshield", "pollo", "pond", "punk", "seven", "shadow", "sonic", "spooky-dash", "storm-scout", "striker", "tails", "the-deer", "vampire", "vini-jr", "water", "x-ray", "zero-point"]);   // sprite families that have a picture in img/
+const PICS=new Set(["8-bit", "adventure", "air", "aura", "batman", "birthday", "blinky", "boss", "burnt-peanut", "bush", "crash-bandicoot", "crown", "demon", "dream", "duck", "dumpster-dive", "earth", "fire", "fishy", "ghost", "grim", "ironmouse", "jackrabbit", "john-wick", "jonesy", "killswitch", "king", "klombo", "lootin-llama", "mega-man", "morgana", "onigiri", "overshield", "peeky-peely", "pollo", "pond", "punk", "seven", "shadow", "sonic", "spooky-dash", "storm-scout", "striker", "tails", "the-deer", "vampire", "vini-jr", "water", "x-ray", "zero-point"]);   // sprite families that have a picture in img/
 const pic=(f,cls)=>PICS.has(f.key)?`<img class="${cls}" src="img/${f.key}.webp" alt="" width="96" height="96" loading="lazy">`:'';
 const openInfo=new Set();
 function infoHtml(f){
