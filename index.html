@@ -20,7 +20,7 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-a
   --bg:#f3f1fb; --surface:#ffffff; --sunk:#e8e4f6; --line:#d6d0ea;
   --fg:#1c1638; --muted:#625a85;
   --accent:#5b2be0; --accent-fg:#ffffff; --have:#12805c; --have-bg:#d9f2e7;
-  --rare:#2f7fe0; --epic:#9a45e6; --legendary:#d97a17; --mythic:#b8930a;
+  --rare:#2f7fe0; --epic:#9a45e6; --legendary:#d97a17; --mythic:#b8930a; --master:#a8780a; --master-bg:#fbf0cc;
   --v-base:#8a84a6; --v-gold:#d9a514; --v-gummy:#e75fa3; --v-galaxy:#6a4be0; --v-gem:#17a398;
   --v-holo:#2aa7dc; --v-cube:#8a2fc9; --v-quack:#e0b800; --v-cheat:#3aa845; --v-loot:#2d6fe0;
   --v-bounty:#d6453d; --v-treat:#e8761c;
@@ -31,13 +31,13 @@ body{margin:0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-a
   --bg:#120e26; --surface:#1d1740; --sunk:#171233; --line:#352c63;
   --fg:#f1eeff; --muted:#a79fce;
   --accent:#a98bff; --accent-fg:#150f30; --have:#4fd6a1; --have-bg:#16382f;
-  --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a;
+  --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; --master:#f2c94c; --master-bg:#3d3413;
   color-scheme:dark } }
 :root[data-theme="dark"]{
   --bg:#120e26; --surface:#1d1740; --sunk:#171233; --line:#352c63;
   --fg:#f1eeff; --muted:#a79fce;
   --accent:#a98bff; --accent-fg:#150f30; --have:#4fd6a1; --have-bg:#16382f;
-  --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a;
+  --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; --master:#f2c94c; --master-bg:#3d3413;
   color-scheme:dark }
 
 *{box-sizing:border-box}
@@ -55,9 +55,9 @@ h1{font-weight:400;line-height:1.1;margin:0}
 .score small{font-family:var(--body);font-size:13px;font-weight:600;color:var(--muted);margin-left:6px}
 .bar{height:10px;border-radius:99px;background:var(--sunk);overflow:hidden;border:1px solid var(--line)}
 .bar i{display:block;height:100%;width:0;background:var(--have);border-radius:99px;transition:width .25s}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.tabs button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 6px;font-weight:700;
-  display:flex;justify-content:center;gap:6px;align-items:baseline;min-width:0}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.tabs button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 4px;font-weight:700;font-size:14px;
+  display:flex;flex-direction:column;align-items:center;gap:1px;min-width:0}
 .tabs button b{font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
 .tabs button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
 .tabs button[aria-pressed="true"] b{color:inherit;opacity:.85}
@@ -95,6 +95,11 @@ h1{font-weight:400;line-height:1.1;margin:0}
 .chip .ck{width:16px;flex:none;font-weight:800;color:var(--have);visibility:hidden}
 .chip[aria-pressed="true"]{background:var(--have-bg);border-color:var(--have)}
 .chip[aria-pressed="true"] .ck{visibility:visible}
+.chip .crown{width:18px;height:18px;flex:none;fill:var(--master)}
+.chip.mast{background:var(--master-bg);border-color:var(--master)}
+.fc .crown{width:14px;height:14px;fill:var(--master);vertical-align:-2px;margin-left:6px}
+.fam.allmast{border-color:var(--master)}
+.fam.allmast .fc{color:var(--master)}
 .empty{padding:36px 12px;text-align:center;color:var(--muted);font-weight:600}
 .foot{margin-top:22px;display:grid;gap:10px;color:var(--muted);font-size:13px}
 .foot .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
@@ -105,21 +110,21 @@ h1{font-weight:400;line-height:1.1;margin:0}
 /* Holiday skins: each one redefines every color token, so it looks the same in light and dark mode */
 :root[data-skin="classic"]{--title:var(--display)}
 :root[data-skin="newyear"]{--bg:#0b0d1a; --surface:#151830; --sunk:#101226; --line:#2c3160; --fg:#f4f1e4; --muted:#a3a6c9; --accent:#f2c94c; --accent-fg:#1a1503; --have:#5fd3c7; --have-bg:#12302e;
-  --title:"Limelight","Lilita One",fantasy; --title-size:27px; --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; color-scheme:dark }
+  --title:"Limelight","Lilita One",fantasy; --title-size:27px; --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; --master:#f2c94c; --master-bg:#3d3413; color-scheme:dark }
 :root[data-skin="valentine"]{--bg:#fff0f4; --surface:#ffffff; --sunk:#ffe0e9; --line:#f5bfd0; --fg:#4a1026; --muted:#8f5a6c; --accent:#d81b60; --accent-fg:#ffffff; --have:#8e24aa; --have-bg:#f1dcf7;
-  --title:"Pacifico","Lilita One",cursive; --title-size:27px; --rare:#2f7fe0; --epic:#9a45e6; --legendary:#d97a17; --mythic:#b8930a; color-scheme:light }
+  --title:"Pacifico","Lilita One",cursive; --title-size:27px; --rare:#2f7fe0; --epic:#9a45e6; --legendary:#d97a17; --mythic:#b8930a; --master:#a8780a; --master-bg:#fbf0cc; color-scheme:light }
 :root[data-skin="stpatrick"]{--bg:#0c1f14; --surface:#143021; --sunk:#0f2719; --line:#26523a; --fg:#effae9; --muted:#9dc3a8; --accent:#f2c230; --accent-fg:#1c1503; --have:#5ee08a; --have-bg:#16402a;
-  --title:"Irish Grover","Lilita One",fantasy; --title-size:28px; --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; color-scheme:dark }
+  --title:"Irish Grover","Lilita One",fantasy; --title-size:28px; --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; --master:#f2c94c; --master-bg:#3d3413; color-scheme:dark }
 :root[data-skin="easter"]{--bg:#f6f3ff; --surface:#ffffff; --sunk:#ebe5fb; --line:#d7cdf2; --fg:#33284f; --muted:#6f6590; --accent:#7b4be0; --accent-fg:#ffffff; --have:#1f9d7a; --have-bg:#d6f3ea;
-  --title:"Chewy","Lilita One",fantasy; --title-size:29px; --rare:#2f7fe0; --epic:#9a45e6; --legendary:#d97a17; --mythic:#b8930a; color-scheme:light }
+  --title:"Chewy","Lilita One",fantasy; --title-size:29px; --rare:#2f7fe0; --epic:#9a45e6; --legendary:#d97a17; --mythic:#b8930a; --master:#a8780a; --master-bg:#fbf0cc; color-scheme:light }
 :root[data-skin="july4"]{--bg:#0a1330; --surface:#121d45; --sunk:#0d1738; --line:#2a3a78; --fg:#f4f6ff; --muted:#a4b0de; --accent:#e63946; --accent-fg:#ffffff; --have:#6ec1ff; --have-bg:#12305a;
-  --title:"Alfa Slab One","Lilita One",serif; --title-size:25px; --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; color-scheme:dark }
+  --title:"Alfa Slab One","Lilita One",serif; --title-size:25px; --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; --master:#f2c94c; --master-bg:#3d3413; color-scheme:dark }
 :root[data-skin="halloween"]{--bg:#150a1d; --surface:#22122e; --sunk:#1a0d24; --line:#472a5c; --fg:#f8ecd8; --muted:#b9a0c6; --accent:#ff7a18; --accent-fg:#1c0d03; --have:#8fe04f; --have-bg:#20361a;
-  --title:"Creepster","Lilita One",fantasy; --title-size:31px; --title-ls:1.5px; --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; color-scheme:dark }
+  --title:"Creepster","Lilita One",fantasy; --title-size:31px; --title-ls:1.5px; --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; --master:#f2c94c; --master-bg:#3d3413; color-scheme:dark }
 :root[data-skin="thanksgiving"]{--bg:#1f130b; --surface:#2e1d11; --sunk:#26180e; --line:#5a3b22; --fg:#fbeedb; --muted:#c9a987; --accent:#e8891c; --accent-fg:#1e0f02; --have:#b7d15a; --have-bg:#303a17;
-  --title:"Lobster","Lilita One",cursive; --title-size:29px; --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; color-scheme:dark }
-:root[data-skin="christmas"]{--bg:#2a0c10; --surface:#3a1217; --sunk:#300e13; --line:#6a2a31; --fg:#fbf1e6; --muted:#d9a9a9; --accent:#3fae6b; --accent-fg:#06200f; --have:#f2c94c; --have-bg:#3d3413;
-  --title:"Mountains of Christmas","Lilita One",cursive; --title-size:31px; --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; color-scheme:dark }
+  --title:"Lobster","Lilita One",cursive; --title-size:29px; --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; --master:#f2c94c; --master-bg:#3d3413; color-scheme:dark }
+:root[data-skin="christmas"]{--bg:#2a0c10; --surface:#3a1217; --sunk:#300e13; --line:#6a2a31; --fg:#fbf1e6; --muted:#d9a9a9; --accent:#3fae6b; --accent-fg:#06200f; --have:#7fd6ff; --have-bg:#12303d;
+  --title:"Mountains of Christmas","Lilita One",cursive; --title-size:31px; --rare:#62a6ff; --epic:#c48bff; --legendary:#ffab52; --mythic:#f2cf4a; --master:#f2c94c; --master-bg:#3d3413; color-scheme:dark }
 h1{font-family:var(--title,var(--display));font-size:var(--title-size,26px);letter-spacing:var(--title-ls,.3px);display:flex;align-items:center;gap:8px}
 :root[data-skin]:not([data-skin="classic"]) h1{color:var(--accent)}
 :root[data-skin="christmas"] h1{font-weight:700}
@@ -169,8 +174,9 @@ document.documentElement.setAttribute('data-skin',skinChoice==='auto'?autoSkin(n
     <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
     <div class="tabs" role="group" aria-label="Show">
       <button id="tab-all" data-tab="all" aria-pressed="true">All <b id="n-all"></b></button>
-      <button id="tab-need" data-tab="need" aria-pressed="false">Still need <b id="n-need"></b></button>
+      <button id="tab-need" data-tab="need" aria-pressed="false">Need <b id="n-need"></b></button>
       <button id="tab-have" data-tab="have" aria-pressed="false">Have <b id="n-have"></b></button>
+      <button id="tab-mast" data-tab="mast" aria-pressed="false">Mastered <b id="n-mast"></b></button>
     </div>
   </div>
 
@@ -185,7 +191,7 @@ document.documentElement.setAttribute('data-skin',skinChoice==='auto'?autoSkin(n
   <div class="list" id="list"></div>
 
   <div class="foot">
-    <div class="row"><span id="status">Tap a variant to mark it as collected. Tap a sprite's name for its power and backstory. Marks are saved on this device.</span>
+    <div class="row"><span id="status">Tap a variant once for collected, again for mastered (a crown), a third time to clear. Tap a sprite's name for its power and backstory.</span>
       <span class="btns"><label for="skin">Theme</label><select id="skin"></select><button id="reset" type="button">Clear all marks</button></span></div>
     <div><span id="asof">List last updated 2026-10-08.</span> The list is checked for new sprites every day. <span id="note">Honey and Obsession Sprites arrive October 15 and are not listed yet.</span> Sprite list from <a href="https://fortnite.gg/sprites" target="_blank" rel="noopener">Fortnite.GG</a>.</div>
     <div>App created by Gary Gesell and Claude.</div>
@@ -256,48 +262,54 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const LS='sprite-tracker-owned-v1';
 let owned=new Set();
 try{ JSON.parse(localStorage.getItem(LS)||'[]').forEach(id=>typeof id==='string'&&owned.add(id)); }catch(e){}
+const LSM='sprite-tracker-mastered-v1';
+let mastered=new Set();
+try{ JSON.parse(localStorage.getItem(LSM)||'[]').forEach(id=>{ if(typeof id==='string'){ mastered.add(id); owned.add(id); } }); }catch(e){}
+const CROWN='<svg class="crown" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 11.500h12l1-7-3.700 2.800L8 2 4.700 7.300 1 4.500zM2.300 12.800h11.400v1.700H2.300z"/></svg>';
 let tab='all', q='', season='', variant='';
-try{ const t=localStorage.getItem(LS+'-tab'); if(['all','need','have'].includes(t)) tab=t; }catch(e){}
+try{ const t=localStorage.getItem(LS+'-tab'); if(['all','need','have','mast'].includes(t)) tab=t; }catch(e){}
 
 const $=id=>document.getElementById(id);
 const vsel=$('variant');
 setCatalog(BAKED);
 
 function render(){
-  let have=0; ALL_IDS.forEach(id=>{if(owned.has(id))have++;}); const need=TOTAL-have;
+  let have=0, mast=0; ALL_IDS.forEach(id=>{if(owned.has(id))have++; if(mastered.has(id))mast++;}); const need=TOTAL-have;
   $('have').textContent=have; $('total').textContent=TOTAL;
   $('pct').textContent=Math.floor(have/TOTAL*100)+'%';
   $('barfill').style.width=(have/TOTAL*100)+'%';
-  $('n-all').textContent=TOTAL; $('n-need').textContent=need; $('n-have').textContent=have;
+  $('n-all').textContent=TOTAL; $('n-need').textContent=need; $('n-have').textContent=have; $('n-mast').textContent=mast;
   document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.tab===tab));
   const words=q.toLowerCase().split(/\s+/).filter(Boolean);
   let html='';
   for(const f of FAMS){
     if(season&&f.season!==season) continue;
-    const got=f.items.filter(i=>owned.has(i.id)).length;
+    const got=f.items.filter(i=>owned.has(i.id)).length, gotM=f.items.filter(i=>mastered.has(i.id)).length;
     const shown=f.items.filter(i=>{
       if(variant&&i.v!==variant) return false;
       const o=owned.has(i.id);
       if(tab==='need'&&o) return false;
       if(tab==='have'&&!o) return false;
+      if(tab==='mast'&&!mastered.has(i.id)) return false;
       const text=(i.v+' '+f.name).toLowerCase();
       return words.every(w=>text.includes(w));
     });
     if(!shown.length) continue;
     const done=got===f.items.length;
-    html+=`<section class="fam${done?' done':''}"><div class="fh"><h2><button class="info-btn" type="button" data-info="${f.key}" aria-expanded="${openInfo.has(f.key)}" aria-controls="info-${f.key}">${esc(f.name)}<span class="i" aria-hidden="true">i</span></button></h2>`+
+    html+=`<section class="fam${done?' done':''}${gotM===f.items.length?' allmast':''}"><div class="fh"><h2><button class="info-btn" type="button" data-info="${f.key}" aria-expanded="${openInfo.has(f.key)}" aria-controls="info-${f.key}">${esc(f.name)}<span class="i" aria-hidden="true">i</span></button></h2>`+
       (f.rarity?`<span class="pill ${f.rarity}">${f.rarity}</span>`:'')+
       (f.season?`<span class="pill s">${esc(f.season)}</span>`:'')+
-      `<span class="fc">${got}/${f.items.length}</span>`+
+      `<span class="fc">${got}/${f.items.length}${gotM?CROWN+gotM:''}</span>`+
       (f.items.length>1?`<button class="allbtn" type="button" data-fam="${f.key}">${done?'Clear':'Got all'}</button>`:'')+
       `</div><div class="chips">`+
-      shown.map(i=>`<button class="chip" type="button" data-id="${i.id}" aria-pressed="${owned.has(i.id)}">`+
-        ico(i.v)+`${esc(i.v)}<span class="ck" aria-hidden="true">✓</span></button>`).join('')+
+      shown.map(i=>`<button class="chip${mastered.has(i.id)?' mast':''}" type="button" data-id="${i.id}" aria-pressed="${owned.has(i.id)}" aria-label="${esc(i.v+' '+f.name)}: ${mastered.has(i.id)?'mastered':owned.has(i.id)?'collected':'not collected'}">`+
+        ico(i.v)+`${esc(i.v)}`+(mastered.has(i.id)?CROWN:`<span class="ck" aria-hidden="true">✓</span>`)+`</button>`).join('')+
       `</div>`+(openInfo.has(f.key)?infoHtml(f):'')+`</section>`;
   }
   if(!html){
     html=`<div class="empty">${tab==='need'&&!q&&!season&&!variant?'You have every sprite on the list.':
-      tab==='have'&&!q&&!season&&!variant?'Nothing marked yet. Switch to All and tap the sprites you own.':'No sprites match these filters.'}</div>`;
+      tab==='have'&&!q&&!season&&!variant?'Nothing marked yet. Switch to All and tap the sprites you own.':
+      tab==='mast'&&!q&&!season&&!variant?'No mastered sprites yet. Tap a collected sprite again to give it a crown.':'No sprites match these filters.'}</div>`;
   }
   $('list').innerHTML=html;
 }
@@ -306,7 +318,7 @@ function render(){
 function setStatus(t){ $('status').textContent=t; }
 function changed(){
   let ok=true;
-  try{ localStorage.setItem(LS,JSON.stringify([...owned])); }catch(e){ ok=false; }
+  try{ localStorage.setItem(LS,JSON.stringify([...owned])); localStorage.setItem(LSM,JSON.stringify([...mastered])); }catch(e){ ok=false; }
   setStatus(ok?'Saved on this device.':'Could not save on this device. Marks will reset when you close the page.');
 }
 /* ---- the sprite list: sprites.json next to this page, built-in list as the fallback ---- */
@@ -325,12 +337,16 @@ async function loadCatalog(){
 
 document.addEventListener('click',e=>{
   const chip=e.target.closest('.chip');
-  if(chip){ const id=chip.dataset.id; owned.has(id)?owned.delete(id):owned.add(id); changed(); render(); return; }
+  if(chip){ const id=chip.dataset.id;
+    if(mastered.has(id)){ mastered.delete(id); owned.delete(id); }
+    else if(owned.has(id)){ mastered.add(id); }
+    else owned.add(id);
+    changed(); render(); return; }
   const ib=e.target.closest('.info-btn');
   if(ib){ const k=ib.dataset.info; openInfo.has(k)?openInfo.delete(k):openInfo.add(k); render(); return; }
   const all=e.target.closest('.allbtn');
   if(all){ const f=FAMS.find(x=>x.key===all.dataset.fam); const done=f.items.every(i=>owned.has(i.id));
-    f.items.forEach(i=>done?owned.delete(i.id):owned.add(i.id)); changed(); render(); return; }
+    f.items.forEach(i=>{ if(done){ owned.delete(i.id); mastered.delete(i.id); } else owned.add(i.id); }); changed(); render(); return; }
   const tb=e.target.closest('.tabs button');
   if(tb){ tab=tb.dataset.tab; try{localStorage.setItem(LS+'-tab',tab);}catch(err){} render(); window.scrollTo({top:0}); return; }
 });
@@ -343,7 +359,7 @@ $('reset').addEventListener('click',()=>{
   if(!armed){ b.textContent='Tap again to clear all marks'; b.classList.add('warn');
     armed=setTimeout(()=>{armed=null;b.textContent='Clear all marks';b.classList.remove('warn');},4000); return; }
   clearTimeout(armed); armed=null; b.textContent='Clear all marks'; b.classList.remove('warn');
-  owned=new Set(); changed(); render();
+  owned=new Set(); mastered=new Set(); changed(); render();
 });
 
 const SKIN_LABELS={auto:'Auto (follows the holidays)',classic:'Classic',newyear:'New Year\u2019s',valentine:'Valentine\u2019s Day',stpatrick:'St. Patrick\u2019s Day',easter:'Easter',july4:'Fourth of July',halloween:'Halloween',thanksgiving:'Thanksgiving',christmas:'Christmas'};
