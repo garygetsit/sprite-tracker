@@ -11,7 +11,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Recovers some Health or Shield a short time after you take damage. Heals more with each level.",
+   "g": "Cheat Code panels; shows up more in high, mountainous areas. Can be picked as a starter Sprite.",
+   "o": "Jonesy is Fortnite's original default hero."
   },
   {
    "n": "Adventure",
@@ -24,7 +27,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Upgrades a random item in your inventory each time it levels up.",
+   "g": "Cheat Code panels; shows up more in high, mountainous areas. Can be picked as a starter Sprite.",
+   "o": ""
   },
   {
    "n": "Bush",
@@ -37,7 +43,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Grows a bush on you after a while. At max level you also get a bush after an elimination.",
+   "g": "Cheat Code panels. Can be picked as a starter Sprite.",
+   "o": ""
   },
   {
    "n": "8-Bit",
@@ -50,7 +59,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Puts an 8-Bit Shotgun in the first chest you open and gives that weapon a score multiplier.",
+   "g": "Cheat Code panels; shows up more in high, mountainous areas.",
+   "o": ""
   },
   {
    "n": "Onigiri",
@@ -63,7 +75,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Gives you Overdrive after you eat or drink a consumable.",
+   "g": "Cheat Code panels; shows up more in high, mountainous areas.",
+   "o": "Design-A-Sprite contest winner, designed by Enorull. It replaced Enorull's original Bullet Sprite idea."
   },
   {
    "n": "Overshield",
@@ -76,7 +91,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Grants Overshield that grows with the Sprite's level.",
+   "g": "Cheat Code panels; shows up more in high, mountainous areas.",
+   "o": ""
   },
   {
    "n": "Mega Man",
@@ -84,7 +102,10 @@
    "r": "Rare",
    "v": [
     "Base"
-   ]
+   ],
+   "p": "Lets you slip and slide around with reduced friction.",
+   "g": "High, mountainous areas. Base version only.",
+   "o": "Mega Man, the Capcom video game hero."
   },
   {
    "n": "Sonic",
@@ -97,7 +118,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Sprint faster, with more speed at each level.",
+   "g": "Cheat Code panels at the Green Hill area.",
+   "o": "Sonic the Hedgehog, from Sega."
   },
   {
    "n": "Tails",
@@ -110,7 +134,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Lets you hover in the air.",
+   "g": "Cheat Code panels at the Green Hill area.",
+   "o": "Tails, Sonic's sidekick from Sega's Sonic the Hedgehog games."
   },
   {
    "n": "Shadow",
@@ -123,7 +150,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Automatically reloads the weapons you aren't holding. At max level it reloads your equipped weapon too.",
+   "g": "Cheat Code panels; shows up more in high, mountainous areas.",
+   "o": "Shadow the Hedgehog, from Sega's Sonic games."
   },
   {
    "n": "Killswitch",
@@ -136,12 +166,15 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Enter Hangtime with better accuracy when you aim while jumping or falling.",
+   "g": "Found around the island at night.",
+   "o": ""
   },
   {
    "n": "Storm Scout",
    "s": "C7 S4",
-   "r": "",
+   "r": "Rare",
    "v": [
     "Base",
     "Gold",
@@ -149,7 +182,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Gives Overdrive after you take Storm damage. At max level it reveals future Storm circles.",
+   "g": "Cheat Code panels; shows up more in high, mountainous areas. Also found in chests.",
+   "o": ""
   },
   {
    "n": "Jackrabbit",
@@ -162,7 +198,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Adds an extra jump while you are in mid-air.",
+   "g": "High, mountainous areas.",
+   "o": "Jazz Jackrabbit, the hero of Epic's own 1994 game."
   },
   {
    "n": "X-Ray",
@@ -175,7 +214,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Periodically marks enemies in an area around you.",
+   "g": "Cheat Code panels; shows up more in high, mountainous areas.",
+   "o": "Design-A-Sprite contest winner, entered by Avila215. It was designed by Brady, age 8, who has worn glasses since eye surgery at age 5 and wanted a sprite with glasses and big eyes like his."
   },
   {
    "n": "Klombo",
@@ -188,7 +230,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Grants random items at each level. It only levels up when you use healing and shield items.",
+   "g": "Very rare. Cheat Code panels; shows up more in high, mountainous areas.",
+   "o": "Klombo is the friendly dinosaur from Fortnite Chapter 3."
   },
   {
    "n": "Crown",
@@ -201,7 +246,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Adds extra Crown Wins when you get a Victory Royale. It only levels up by winning matches.",
+   "g": "High, mountainous areas. The other Crown variants unlock by mastering the one before.",
+   "o": "Based on Fortnite's Victory Crown."
   },
   {
    "n": "Spooky Dash",
@@ -214,12 +262,15 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Jump in mid-air to dash and phase through some objects. Charges refill over time.",
+   "g": "Added for Fortnitemares 2026.",
+   "o": ""
   },
   {
    "n": "Blinky",
    "s": "C7 S4",
-   "r": "",
+   "r": "Legendary",
    "v": [
     "Base",
     "Gold",
@@ -227,12 +278,15 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Cloaks you for a short time after you take damage.",
+   "g": "Appears on the island at night.",
+   "o": "Blinky is the red ghost from Pac-Man."
   },
   {
    "n": "Birthday",
    "s": "C7 S4",
-   "r": "",
+   "r": "Rare",
    "v": [
     "Base",
     "Gold",
@@ -240,12 +294,15 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Opening chests can spawn a slice of Birthday Cake. At max level, eliminations can too.",
+   "g": "High, mountainous areas.",
+   "o": "Added for Fortnite's 9th birthday."
   },
   {
    "n": "Crash Bandicoot",
    "s": "C7 S4",
-   "r": "",
+   "r": "Legendary",
    "v": [
     "Base",
     "Gold",
@@ -253,12 +310,15 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Jump in mid-air to spin-attack, damaging and knocking back nearby opponents.",
+   "g": "High, mountainous areas.",
+   "o": "Crash Bandicoot, the classic platform game hero."
   },
   {
    "n": "Pond",
    "s": "C7 S4",
-   "r": "",
+   "r": "Epic",
    "v": [
     "Base",
     "Gold",
@@ -266,12 +326,15 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Triggers a Super Jump when you jump, using charges that build up over time.",
+   "g": "",
+   "o": "Design-A-Sprite contest winner, designed by Pine & Kiri."
   },
   {
    "n": "Morgana",
    "s": "C7 S4",
-   "r": "",
+   "r": "Epic",
    "v": [
     "Base",
     "Gold",
@@ -279,12 +342,15 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Makes healing items more effective, improving with each level.",
+   "g": "",
+   "o": "Morgana, from the Persona game series."
   },
   {
    "n": "Vampire",
    "s": "C7 S4",
-   "r": "",
+   "r": "Legendary",
    "v": [
     "Base",
     "Gold",
@@ -292,12 +358,15 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Restores Health when you damage an enemy. Restores more with each level.",
+   "g": "Added for Fortnitemares 2026.",
+   "o": ""
   },
   {
    "n": "The Deer",
    "s": "C7 S4",
-   "r": "",
+   "r": "Legendary",
    "v": [
     "Base",
     "Gold",
@@ -305,12 +374,15 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Melee attacks deal more damage, growing with each level.",
+   "g": "Added for Fortnitemares 2026.",
+   "o": "Reported to come from the game 99 Nights."
   },
   {
    "n": "Dumpster Dive",
    "s": "C7 S4",
-   "r": "",
+   "r": "Epic",
    "v": [
     "Base",
     "Gold",
@@ -318,7 +390,10 @@
     "Loot Hacker",
     "Bounty Hunter",
     "Trick or Treat"
-   ]
+   ],
+   "p": "Food gives bonus healing. You find food when jumping out of hiding spots such as dumpsters.",
+   "g": "Added for Fortnitemares 2026.",
+   "o": "Design-A-Sprite contest winner, designed by StinkyPrincessGoose."
   },
   {
    "n": "Water",
@@ -332,7 +407,10 @@
     "Gem",
     "Holofoil",
     "Quack"
-   ]
+   ],
+   "p": "Restores Shield for you and nearby squadmates while you stand in water.",
+   "g": "Sprite Chests, and near rivers, beaches and fishing spots.",
+   "o": ""
   },
   {
    "n": "Earth",
@@ -346,7 +424,10 @@
     "Gem",
     "Cube",
     "Quack"
-   ]
+   ],
+   "p": "Raises your chance of finding rare items when you open chests.",
+   "g": "Sprite Chests, and around forest areas.",
+   "o": ""
   },
   {
    "n": "Fire",
@@ -360,7 +441,10 @@
     "Holofoil",
     "Cube",
     "Quack"
-   ]
+   ],
+   "p": "Creates a burst of fire around an enemy after you deal enough damage to them.",
+   "g": "Sprite Chests and floor loot.",
+   "o": ""
   },
   {
    "n": "Fishy",
@@ -372,7 +456,10 @@
     "Gummy",
     "Galaxy",
     "Cube"
-   ]
+   ],
+   "p": "Faster swimming, plus a short speed burst after you take damage.",
+   "g": "Fishing spots and Sprite Chests.",
+   "o": ""
   },
   {
    "n": "Duck",
@@ -384,7 +471,10 @@
     "Gummy",
     "Galaxy",
     "Gem"
-   ]
+   ],
+   "p": "Restores your Shield whenever you emote or use a Jam Track.",
+   "g": "Rare Chests, Sprite Chests and fishing spots.",
+   "o": ""
   },
   {
    "n": "Ghost",
@@ -396,7 +486,10 @@
     "Gummy",
     "Galaxy",
     "Holofoil"
-   ]
+   ],
+   "p": "Briefly cloaks you every time you reload.",
+   "g": "Sprite Chests.",
+   "o": ""
   },
   {
    "n": "Demon",
@@ -408,7 +501,10 @@
     "Gummy",
     "Galaxy",
     "Gem"
-   ]
+   ],
+   "p": "Siphons Health and Shield when you eliminate an enemy.",
+   "g": "Rare Chests, Sprite Chests and fishing spots.",
+   "o": ""
   },
   {
    "n": "King",
@@ -420,7 +516,10 @@
     "Gummy",
     "Galaxy",
     "Holofoil"
-   ]
+   ],
+   "p": "Increases your Pickaxe damage.",
+   "g": "Sprite Chests and Relic Chests.",
+   "o": ""
   },
   {
    "n": "Striker",
@@ -432,7 +531,10 @@
     "Gummy",
     "Galaxy",
     "Holofoil"
-   ]
+   ],
+   "p": "Triggers Overdrive when you mantle, hurdle or wall scramble.",
+   "g": "Kick the soccer ball into the goal at the Soccer Pitch.",
+   "o": ""
   },
   {
    "n": "Aura",
@@ -444,19 +546,25 @@
     "Gummy",
     "Galaxy",
     "Gem"
-   ]
+   ],
+   "p": "Builds a Shock Rock charge as you deal damage. When full, it triggers a Shockwave on you.",
+   "g": "Chests, Sprite Chests and Supply Drops.",
+   "o": ""
   },
   {
    "n": "Air",
    "s": "C7 S3",
-   "r": "",
+   "r": "Rare",
    "v": [
     "Base",
     "Gold",
     "Gummy",
     "Galaxy",
     "Holofoil"
-   ]
+   ],
+   "p": "Faster sprinting and higher jumps.",
+   "g": "Sprite Chests.",
+   "o": ""
   },
   {
    "n": "Dream",
@@ -468,7 +576,10 @@
     "Gummy",
     "Galaxy",
     "Cube"
-   ]
+   ],
+   "p": "Drops a random item each time it levels up. At max level it bursts into Legendary loot and extracts itself.",
+   "g": "Sprite Chests, or the 500 Gold Bar vault at Battlewoods.",
+   "o": ""
   },
   {
    "n": "Punk",
@@ -480,7 +591,10 @@
     "Gummy",
     "Galaxy",
     "Cube"
-   ]
+   ],
+   "p": "Does nothing until Level 5, then randomly grants infinite ammo.",
+   "g": "Chests across the map.",
+   "o": ""
   },
   {
    "n": "Boss",
@@ -492,7 +606,10 @@
     "Gummy",
     "Galaxy",
     "Cube"
-   ]
+   ],
+   "p": "Raises your maximum Health and Shield.",
+   "g": "Defeat Boss characters on the island.",
+   "o": ""
   },
   {
    "n": "Seven",
@@ -504,7 +621,10 @@
     "Gummy",
     "Galaxy",
     "Holofoil"
-   ]
+   ],
+   "p": "Reveals enemy foot trails to you and your squad.",
+   "g": "Sprite Chests in mountainous areas.",
+   "o": "Named for The Seven, heroes of Fortnite's story."
   },
   {
    "n": "Peeky Peely",
@@ -516,7 +636,10 @@
     "Gummy",
     "Galaxy",
     "Holofoil"
-   ]
+   ],
+   "p": "Pinging reveals nearby rare Sprite variants, but it also reveals your location to enemies.",
+   "g": "Sprite Chests.",
+   "o": "Peely is Fortnite's banana mascot."
   },
   {
    "n": "Lootin’ Llama",
@@ -528,7 +651,10 @@
     "Gummy",
     "Galaxy",
     "Gem"
-   ]
+   ],
+   "p": "Opening ammo boxes can upgrade your weapon's rarity.",
+   "g": "Sprite Chests.",
+   "o": "Based on Fortnite's loot Llama."
   },
   {
    "n": "Zero Point",
@@ -543,7 +669,10 @@
     "Holofoil",
     "Cube",
     "Quack"
-   ]
+   ],
+   "p": "Spawns a Shield Bubble Jr. around you whenever you use a healing item.",
+   "g": "Chests, but extremely rare.",
+   "o": "The Zero Point is the energy source at the center of Fortnite's story."
   },
   {
    "n": "Grim",
@@ -557,7 +686,10 @@
     "Gem",
     "Holofoil",
     "Cube"
-   ]
+   ],
+   "p": "Marks any player who deals damage to you.",
+   "g": "Sprite Chests.",
+   "o": ""
   },
   {
    "n": "Batman",
@@ -570,7 +702,10 @@
     "Galaxy",
     "Holofoil",
     "Cube"
-   ]
+   ],
+   "p": "Launches you upward and opens the Bat Cape for a boosted glide.",
+   "g": "Defeat the Catwoman or Poison Ivy bosses.",
+   "o": "Batman, from DC."
   },
   {
    "n": "Vini Jr.",
@@ -578,7 +713,10 @@
    "r": "Mythic",
    "v": [
     "Base"
-   ]
+   ],
+   "p": "Sprinting boosts your damage to structures. Sliding into enemies triggers Overdrive, with faster fire rate and reload.",
+   "g": "Sprite Chests.",
+   "o": "Based on footballer Vinícius Júnior."
   },
   {
    "n": "Burnt Peanut",
@@ -586,7 +724,10 @@
    "r": "Mythic",
    "v": [
     "Base"
-   ]
+   ],
+   "p": "Small chance of rare or Mythic loot when you eliminate enemies.",
+   "g": "Relic Chests and Sprite Chests.",
+   "o": "Based on the streamer TheBurntPeanut."
   },
   {
    "n": "Pollo",
@@ -594,7 +735,10 @@
    "r": "Mythic",
    "v": [
     "Base"
-   ]
+   ],
+   "p": "After an elimination, slowly refills Shield for you and nearby squadmates.",
+   "g": "Defeat Pollo.",
+   "o": ""
   },
   {
    "n": "Ironmouse",
@@ -602,7 +746,10 @@
    "r": "Mythic",
    "v": [
     "Base"
-   ]
+   ],
+   "p": "Regenerates Health when you're low, with Cloak and Low Gravity while it heals.",
+   "g": "Relic Chests and Sprite Chests.",
+   "o": "Based on the VTuber Ironmouse."
   },
   {
    "n": "John Wick",
@@ -610,7 +757,10 @@
    "r": "Mythic",
    "v": [
     "Base"
-   ]
+   ],
+   "p": "Knocking or eliminating a player briefly marks nearby enemies.",
+   "g": "Fortnite Reload only.",
+   "o": "John Wick, from the film series."
   }
  ],
  "updated": "2026-10-08",

@@ -72,6 +72,16 @@ h1{font-weight:400;line-height:1.1;margin:0}
 .fam.done{border-color:var(--have)}
 .fh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .fh h2{font-family:var(--display);font-weight:400;font-size:19px;margin:0;line-height:1.1;min-width:0}
+.info-btn{font:inherit;color:inherit;background:none;border:0;padding:0;display:inline-flex;align-items:center;gap:7px;text-align:left}
+.info-btn .i{font-family:var(--body);font-size:11px;font-weight:800;font-style:italic;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--muted);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.info-btn[aria-expanded="true"] .i{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.info{border-top:1px solid var(--line);padding-top:10px;display:grid;gap:8px;font-size:14px}
+.info p{margin:0}
+.info b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:1px}
+.info ul{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.info li{display:flex;gap:8px;align-items:flex-start}
+.info li .ico{width:16px;height:16px;flex:none;fill:currentColor;margin-top:2px}
+.info .src{font-size:12px;color:var(--muted)}
 .pill{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:99px;border:1.5px solid currentColor}
 .pill.Rare{color:var(--rare)} .pill.Epic{color:var(--epic)} .pill.Legendary{color:var(--legendary)} .pill.Mythic{color:var(--mythic)}
 .pill.s{color:var(--muted);border-color:var(--line)}
@@ -175,7 +185,7 @@ document.documentElement.setAttribute('data-skin',skinChoice==='auto'?autoSkin(n
   <div class="list" id="list"></div>
 
   <div class="foot">
-    <div class="row"><span id="status">Tap a sprite to mark it as collected. Marks are saved on this device.</span>
+    <div class="row"><span id="status">Tap a variant to mark it as collected. Tap a sprite's name for its power and backstory. Marks are saved on this device.</span>
       <span class="btns"><label for="skin">Theme</label><select id="skin"></select><button id="reset" type="button">Clear all marks</button></span></div>
     <div><span id="asof">List last updated 2026-10-08.</span> The list is checked for new sprites every day. <span id="note">Honey and Obsession Sprites arrive October 15 and are not listed yet.</span> Sprite list from <a href="https://fortnite.gg/sprites" target="_blank" rel="noopener">Fortnite.GG</a>.</div>
     <div>App created by Gary Gesell and Claude.</div>
@@ -184,29 +194,8 @@ document.documentElement.setAttribute('data-skin',skinChoice==='auto'?autoSkin(n
 </div>
 
 <script>
-const S4V=['Base','Gold','Cheat Master','Loot Hacker','Bounty Hunter','Trick or Treat'];
-const B=['Base','Gold','Gummy','Galaxy'];
-// [name, season, rarity ('' = not confirmed), variants]
-const FAMILIES=[
- ['Jonesy','S4','Rare',S4V],['Adventure','S4','Rare',S4V],['Bush','S4','Rare',S4V],['8-Bit','S4','Rare',S4V],
- ['Onigiri','S4','Rare',S4V],['Overshield','S4','Rare',S4V],['Mega Man','S4','Rare',['Base']],
- ['Sonic','S4','Epic',S4V],['Tails','S4','Epic',S4V],['Shadow','S4','Epic',S4V],['Killswitch','S4','Epic',S4V],
- ['Storm Scout','S4','',S4V],['Jackrabbit','S4','Legendary',S4V],['X-Ray','S4','Legendary',S4V],
- ['Klombo','S4','Mythic',S4V],['Crown','S4','Mythic',S4V],['Spooky Dash','S4','Mythic',S4V],
- ['Blinky','S4','',S4V],['Birthday','S4','',S4V],['Crash Bandicoot','S4','',S4V],['Pond','S4','',S4V],
- ['Morgana','S4','',S4V],['Vampire','S4','',S4V],['The Deer','S4','',S4V],['Dumpster Dive','S4','',S4V],
- ['Water','S3','Rare',[...B,'Gem','Holofoil','Quack']],['Earth','S3','Rare',[...B,'Gem','Cube','Quack']],
- ['Fire','S3','Rare',[...B,'Holofoil','Cube','Quack']],['Fishy','S3','Rare',[...B,'Cube']],
- ['Duck','S3','Epic',[...B,'Gem']],['Ghost','S3','Epic',[...B,'Holofoil']],['Demon','S3','Epic',[...B,'Gem']],
- ['King','S3','Epic',[...B,'Holofoil']],['Striker','S3','Epic',[...B,'Holofoil']],['Aura','S3','Epic',[...B,'Gem']],
- ['Air','S3','',[...B,'Holofoil']],
- ['Dream','S3','Legendary',[...B,'Cube']],['Punk','S3','Legendary',[...B,'Cube']],['Boss','S3','Legendary',[...B,'Cube']],
- ['Seven','S3','Legendary',[...B,'Holofoil']],['Peeky Peely','S3','Legendary',[...B,'Holofoil']],
- ['Lootin’ Llama','S3','Legendary',[...B,'Gem']],
- ['Zero Point','S3','Mythic',[...B,'Gem','Holofoil','Cube','Quack']],['Grim','S3','Mythic',[...B,'Gem','Holofoil','Cube']],
- ['Batman','S3','Mythic',[...B,'Holofoil','Cube']],['Vini Jr.','S3','Mythic',['Base']],['Burnt Peanut','S3','Mythic',['Base']],
- ['Pollo','S3','Mythic',['Base']],['Ironmouse','S3','Mythic',['Base']],['John Wick','S3','Mythic',['Base']]
-];
+// The sprite list built into the page. sprites data loaded at start replaces it when available.
+const BAKED=[{"n":"Jonesy","s":"C7 S4","r":"Rare","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Recovers some Health or Shield a short time after you take damage. Heals more with each level.","g":"Cheat Code panels; shows up more in high, mountainous areas. Can be picked as a starter Sprite.","o":"Jonesy is Fortnite's original default hero."},{"n":"Adventure","s":"C7 S4","r":"Rare","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Upgrades a random item in your inventory each time it levels up.","g":"Cheat Code panels; shows up more in high, mountainous areas. Can be picked as a starter Sprite.","o":""},{"n":"Bush","s":"C7 S4","r":"Rare","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Grows a bush on you after a while. At max level you also get a bush after an elimination.","g":"Cheat Code panels. Can be picked as a starter Sprite.","o":""},{"n":"8-Bit","s":"C7 S4","r":"Rare","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Puts an 8-Bit Shotgun in the first chest you open and gives that weapon a score multiplier.","g":"Cheat Code panels; shows up more in high, mountainous areas.","o":""},{"n":"Onigiri","s":"C7 S4","r":"Rare","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Gives you Overdrive after you eat or drink a consumable.","g":"Cheat Code panels; shows up more in high, mountainous areas.","o":"Design-A-Sprite contest winner, designed by Enorull. It replaced Enorull's original Bullet Sprite idea."},{"n":"Overshield","s":"C7 S4","r":"Rare","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Grants Overshield that grows with the Sprite's level.","g":"Cheat Code panels; shows up more in high, mountainous areas.","o":""},{"n":"Mega Man","s":"C7 S4","r":"Rare","v":["Base"],"p":"Lets you slip and slide around with reduced friction.","g":"High, mountainous areas. Base version only.","o":"Mega Man, the Capcom video game hero."},{"n":"Sonic","s":"C7 S4","r":"Epic","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Sprint faster, with more speed at each level.","g":"Cheat Code panels at the Green Hill area.","o":"Sonic the Hedgehog, from Sega."},{"n":"Tails","s":"C7 S4","r":"Epic","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Lets you hover in the air.","g":"Cheat Code panels at the Green Hill area.","o":"Tails, Sonic's sidekick from Sega's Sonic the Hedgehog games."},{"n":"Shadow","s":"C7 S4","r":"Epic","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Automatically reloads the weapons you aren't holding. At max level it reloads your equipped weapon too.","g":"Cheat Code panels; shows up more in high, mountainous areas.","o":"Shadow the Hedgehog, from Sega's Sonic games."},{"n":"Killswitch","s":"C7 S4","r":"Epic","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Enter Hangtime with better accuracy when you aim while jumping or falling.","g":"Found around the island at night.","o":""},{"n":"Storm Scout","s":"C7 S4","r":"Rare","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Gives Overdrive after you take Storm damage. At max level it reveals future Storm circles.","g":"Cheat Code panels; shows up more in high, mountainous areas. Also found in chests.","o":""},{"n":"Jackrabbit","s":"C7 S4","r":"Legendary","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Adds an extra jump while you are in mid-air.","g":"High, mountainous areas.","o":"Jazz Jackrabbit, the hero of Epic's own 1994 game."},{"n":"X-Ray","s":"C7 S4","r":"Legendary","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Periodically marks enemies in an area around you.","g":"Cheat Code panels; shows up more in high, mountainous areas.","o":"Design-A-Sprite contest winner, entered by Avila215. It was designed by Brady, age 8, who has worn glasses since eye surgery at age 5 and wanted a sprite with glasses and big eyes like his."},{"n":"Klombo","s":"C7 S4","r":"Mythic","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Grants random items at each level. It only levels up when you use healing and shield items.","g":"Very rare. Cheat Code panels; shows up more in high, mountainous areas.","o":"Klombo is the friendly dinosaur from Fortnite Chapter 3."},{"n":"Crown","s":"C7 S4","r":"Mythic","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Adds extra Crown Wins when you get a Victory Royale. It only levels up by winning matches.","g":"High, mountainous areas. The other Crown variants unlock by mastering the one before.","o":"Based on Fortnite's Victory Crown."},{"n":"Spooky Dash","s":"C7 S4","r":"Mythic","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Jump in mid-air to dash and phase through some objects. Charges refill over time.","g":"Added for Fortnitemares 2026.","o":""},{"n":"Blinky","s":"C7 S4","r":"Legendary","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Cloaks you for a short time after you take damage.","g":"Appears on the island at night.","o":"Blinky is the red ghost from Pac-Man."},{"n":"Birthday","s":"C7 S4","r":"Rare","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Opening chests can spawn a slice of Birthday Cake. At max level, eliminations can too.","g":"High, mountainous areas.","o":"Added for Fortnite's 9th birthday."},{"n":"Crash Bandicoot","s":"C7 S4","r":"Legendary","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Jump in mid-air to spin-attack, damaging and knocking back nearby opponents.","g":"High, mountainous areas.","o":"Crash Bandicoot, the classic platform game hero."},{"n":"Pond","s":"C7 S4","r":"Epic","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Triggers a Super Jump when you jump, using charges that build up over time.","g":"","o":"Design-A-Sprite contest winner, designed by Pine & Kiri."},{"n":"Morgana","s":"C7 S4","r":"Epic","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Makes healing items more effective, improving with each level.","g":"","o":"Morgana, from the Persona game series."},{"n":"Vampire","s":"C7 S4","r":"Legendary","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Restores Health when you damage an enemy. Restores more with each level.","g":"Added for Fortnitemares 2026.","o":""},{"n":"The Deer","s":"C7 S4","r":"Legendary","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Melee attacks deal more damage, growing with each level.","g":"Added for Fortnitemares 2026.","o":"Reported to come from the game 99 Nights."},{"n":"Dumpster Dive","s":"C7 S4","r":"Epic","v":["Base","Gold","Cheat Master","Loot Hacker","Bounty Hunter","Trick or Treat"],"p":"Food gives bonus healing. You find food when jumping out of hiding spots such as dumpsters.","g":"Added for Fortnitemares 2026.","o":"Design-A-Sprite contest winner, designed by StinkyPrincessGoose."},{"n":"Water","s":"C7 S3","r":"Rare","v":["Base","Gold","Gummy","Galaxy","Gem","Holofoil","Quack"],"p":"Restores Shield for you and nearby squadmates while you stand in water.","g":"Sprite Chests, and near rivers, beaches and fishing spots.","o":""},{"n":"Earth","s":"C7 S3","r":"Rare","v":["Base","Gold","Gummy","Galaxy","Gem","Cube","Quack"],"p":"Raises your chance of finding rare items when you open chests.","g":"Sprite Chests, and around forest areas.","o":""},{"n":"Fire","s":"C7 S3","r":"Rare","v":["Base","Gold","Gummy","Galaxy","Holofoil","Cube","Quack"],"p":"Creates a burst of fire around an enemy after you deal enough damage to them.","g":"Sprite Chests and floor loot.","o":""},{"n":"Fishy","s":"C7 S3","r":"Rare","v":["Base","Gold","Gummy","Galaxy","Cube"],"p":"Faster swimming, plus a short speed burst after you take damage.","g":"Fishing spots and Sprite Chests.","o":""},{"n":"Duck","s":"C7 S3","r":"Epic","v":["Base","Gold","Gummy","Galaxy","Gem"],"p":"Restores your Shield whenever you emote or use a Jam Track.","g":"Rare Chests, Sprite Chests and fishing spots.","o":""},{"n":"Ghost","s":"C7 S3","r":"Epic","v":["Base","Gold","Gummy","Galaxy","Holofoil"],"p":"Briefly cloaks you every time you reload.","g":"Sprite Chests.","o":""},{"n":"Demon","s":"C7 S3","r":"Epic","v":["Base","Gold","Gummy","Galaxy","Gem"],"p":"Siphons Health and Shield when you eliminate an enemy.","g":"Rare Chests, Sprite Chests and fishing spots.","o":""},{"n":"King","s":"C7 S3","r":"Epic","v":["Base","Gold","Gummy","Galaxy","Holofoil"],"p":"Increases your Pickaxe damage.","g":"Sprite Chests and Relic Chests.","o":""},{"n":"Striker","s":"C7 S3","r":"Epic","v":["Base","Gold","Gummy","Galaxy","Holofoil"],"p":"Triggers Overdrive when you mantle, hurdle or wall scramble.","g":"Kick the soccer ball into the goal at the Soccer Pitch.","o":""},{"n":"Aura","s":"C7 S3","r":"Epic","v":["Base","Gold","Gummy","Galaxy","Gem"],"p":"Builds a Shock Rock charge as you deal damage. When full, it triggers a Shockwave on you.","g":"Chests, Sprite Chests and Supply Drops.","o":""},{"n":"Air","s":"C7 S3","r":"Rare","v":["Base","Gold","Gummy","Galaxy","Holofoil"],"p":"Faster sprinting and higher jumps.","g":"Sprite Chests.","o":""},{"n":"Dream","s":"C7 S3","r":"Legendary","v":["Base","Gold","Gummy","Galaxy","Cube"],"p":"Drops a random item each time it levels up. At max level it bursts into Legendary loot and extracts itself.","g":"Sprite Chests, or the 500 Gold Bar vault at Battlewoods.","o":""},{"n":"Punk","s":"C7 S3","r":"Legendary","v":["Base","Gold","Gummy","Galaxy","Cube"],"p":"Does nothing until Level 5, then randomly grants infinite ammo.","g":"Chests across the map.","o":""},{"n":"Boss","s":"C7 S3","r":"Legendary","v":["Base","Gold","Gummy","Galaxy","Cube"],"p":"Raises your maximum Health and Shield.","g":"Defeat Boss characters on the island.","o":""},{"n":"Seven","s":"C7 S3","r":"Legendary","v":["Base","Gold","Gummy","Galaxy","Holofoil"],"p":"Reveals enemy foot trails to you and your squad.","g":"Sprite Chests in mountainous areas.","o":"Named for The Seven, heroes of Fortnite's story."},{"n":"Peeky Peely","s":"C7 S3","r":"Legendary","v":["Base","Gold","Gummy","Galaxy","Holofoil"],"p":"Pinging reveals nearby rare Sprite variants, but it also reveals your location to enemies.","g":"Sprite Chests.","o":"Peely is Fortnite's banana mascot."},{"n":"Lootin’ Llama","s":"C7 S3","r":"Legendary","v":["Base","Gold","Gummy","Galaxy","Gem"],"p":"Opening ammo boxes can upgrade your weapon's rarity.","g":"Sprite Chests.","o":"Based on Fortnite's loot Llama."},{"n":"Zero Point","s":"C7 S3","r":"Mythic","v":["Base","Gold","Gummy","Galaxy","Gem","Holofoil","Cube","Quack"],"p":"Spawns a Shield Bubble Jr. around you whenever you use a healing item.","g":"Chests, but extremely rare.","o":"The Zero Point is the energy source at the center of Fortnite's story."},{"n":"Grim","s":"C7 S3","r":"Mythic","v":["Base","Gold","Gummy","Galaxy","Gem","Holofoil","Cube"],"p":"Marks any player who deals damage to you.","g":"Sprite Chests.","o":""},{"n":"Batman","s":"C7 S3","r":"Mythic","v":["Base","Gold","Gummy","Galaxy","Holofoil","Cube"],"p":"Launches you upward and opens the Bat Cape for a boosted glide.","g":"Defeat the Catwoman or Poison Ivy bosses.","o":"Batman, from DC."},{"n":"Vini Jr.","s":"C7 S3","r":"Mythic","v":["Base"],"p":"Sprinting boosts your damage to structures. Sliding into enemies triggers Overdrive, with faster fire rate and reload.","g":"Sprite Chests.","o":"Based on footballer Vinícius Júnior."},{"n":"Burnt Peanut","s":"C7 S3","r":"Mythic","v":["Base"],"p":"Small chance of rare or Mythic loot when you eliminate enemies.","g":"Relic Chests and Sprite Chests.","o":"Based on the streamer TheBurntPeanut."},{"n":"Pollo","s":"C7 S3","r":"Mythic","v":["Base"],"p":"After an elimination, slowly refills Shield for you and nearby squadmates.","g":"Defeat Pollo.","o":""},{"n":"Ironmouse","s":"C7 S3","r":"Mythic","v":["Base"],"p":"Regenerates Health when you're low, with Cloak and Low Gravity while it heals.","g":"Relic Chests and Sprite Chests.","o":"Based on the VTuber Ironmouse."},{"n":"John Wick","s":"C7 S3","r":"Mythic","v":["Base"],"p":"Knocking or eliminating a player briefly marks nearby enemies.","g":"Fortnite Reload only.","o":"John Wick, from the film series."}];
 const VCOL={'Base':'base','Gold':'gold','Gummy':'gummy','Galaxy':'galaxy','Gem':'gem','Holofoil':'holo','Cube':'cube','Quack':'quack',
  'Cheat Master':'cheat','Loot Hacker':'loot','Bounty Hunter':'bounty','Trick or Treat':'treat'};
 const ICONS={
@@ -225,13 +214,13 @@ const ICONS={
 };
 const ico=v=>`<svg class="ico" viewBox="0 0 16 16" aria-hidden="true" style="color:var(--v-${VCOL[v]||'base'})">${ICONS[v]||ICONS.Base}</svg>`;
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-const BAKED=FAMILIES.map(([n,s,r,v])=>({n,s:'C7 '+s,r,v}));
 let FAMS=[], ALL_IDS=new Set(), TOTAL=0;
 function setCatalog(list){
   const fams=[];
   for(const f of list){
     if(!f||typeof f.n!=='string'||!Array.isArray(f.v)||!f.v.length) continue;
     fams.push({name:f.n,season:String(f.s||''),rarity:RARITIES.includes(f.r)?f.r:'',key:slug(f.n),
+      power:typeof f.p==='string'?f.p:'',get:typeof f.g==='string'?f.g:'',origin:typeof f.o==='string'?f.o:'',
       items:f.v.filter(v=>typeof v==='string').map(v=>({v,id:slug(f.n)+'.'+slug(v)}))});
   }
   if(!fams.length) return false;
@@ -245,6 +234,21 @@ function fillSelect(sel,allLabel,values,label){
   [['',allLabel],...values.map(v=>[v,label(v)])].forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;sel.appendChild(o);});
   sel.value=values.includes(cur)?cur:'';
   if(sel.id==='season') season=sel.value; else variant=sel.value;
+}
+const VBONUS={'Gold':'Extra XP from eliminations.','Gummy':'+10% Sprite Dust when you extract.','Galaxy':'+20% ammo from ammo boxes.',
+ 'Gem':'30% less fall damage.','Holofoil':'Better chance of rare variants in chests.','Cube':'Overdrive while you are in the Storm.',
+ 'Quack':'Shares 50% of its Sprite XP with your other Sprites. A Mastery reward.','Cheat Master':'Any input works on Cheat Code panels.',
+ 'Loot Hacker':'Better odds of spawning items from your Loot Hacks.','Bounty Hunter':'Chance to find Sprites when you eliminate opponents.',
+ 'Trick or Treat':'Chance to spawn candy when you open containers.'};
+const openInfo=new Set();
+function infoHtml(f){
+  let h='<div class="info" id="info-'+f.key+'">';
+  h+='<p><b>Power</b>'+(f.power?esc(f.power):'No details yet.')+'</p>';
+  if(f.get) h+='<p><b>Where to find it</b>'+esc(f.get)+'</p>';
+  if(f.origin) h+='<p><b>Where it comes from</b>'+esc(f.origin)+'</p>';
+  const vb=f.items.filter(i=>VBONUS[i.v]);
+  if(vb.length) h+='<p><b>Variant bonuses</b></p><ul>'+vb.map(i=>'<li>'+ico(i.v)+'<span><strong>'+esc(i.v)+':</strong> '+VBONUS[i.v]+'</span></li>').join('')+'</ul>';
+  return h+'<p class="src">Gathered from fan guides. Locations and effects can change between seasons.</p></div>';
 }
 const RARITIES=['Rare','Epic','Legendary','Mythic'];
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -281,7 +285,7 @@ function render(){
     });
     if(!shown.length) continue;
     const done=got===f.items.length;
-    html+=`<section class="fam${done?' done':''}"><div class="fh"><h2>${esc(f.name)}</h2>`+
+    html+=`<section class="fam${done?' done':''}"><div class="fh"><h2><button class="info-btn" type="button" data-info="${f.key}" aria-expanded="${openInfo.has(f.key)}" aria-controls="info-${f.key}">${esc(f.name)}<span class="i" aria-hidden="true">i</span></button></h2>`+
       (f.rarity?`<span class="pill ${f.rarity}">${f.rarity}</span>`:'')+
       (f.season?`<span class="pill s">${esc(f.season)}</span>`:'')+
       `<span class="fc">${got}/${f.items.length}</span>`+
@@ -289,7 +293,7 @@ function render(){
       `</div><div class="chips">`+
       shown.map(i=>`<button class="chip" type="button" data-id="${i.id}" aria-pressed="${owned.has(i.id)}">`+
         ico(i.v)+`${esc(i.v)}<span class="ck" aria-hidden="true">✓</span></button>`).join('')+
-      `</div></section>`;
+      `</div>`+(openInfo.has(f.key)?infoHtml(f):'')+`</section>`;
   }
   if(!html){
     html=`<div class="empty">${tab==='need'&&!q&&!season&&!variant?'You have every sprite on the list.':
@@ -322,6 +326,8 @@ async function loadCatalog(){
 document.addEventListener('click',e=>{
   const chip=e.target.closest('.chip');
   if(chip){ const id=chip.dataset.id; owned.has(id)?owned.delete(id):owned.add(id); changed(); render(); return; }
+  const ib=e.target.closest('.info-btn');
+  if(ib){ const k=ib.dataset.info; openInfo.has(k)?openInfo.delete(k):openInfo.add(k); render(); return; }
   const all=e.target.closest('.allbtn');
   if(all){ const f=FAMS.find(x=>x.key===all.dataset.fam); const done=f.items.every(i=>owned.has(i.id));
     f.items.forEach(i=>done?owned.delete(i.id):owned.add(i.id)); changed(); render(); return; }
