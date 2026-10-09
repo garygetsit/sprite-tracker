@@ -143,6 +143,7 @@ h1{font-family:var(--title,var(--display));font-size:var(--title-size,26px);lett
 :root[data-skin]:not([data-skin="classic"]) .bar i{background:linear-gradient(90deg,var(--accent),var(--have))}
 .bannerbox{position:relative;margin-top:12px;border-radius:14px;overflow:hidden;line-height:0}
 .banner{display:block;width:100%;height:auto}
+#bvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 #fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .cmpbar{display:none;grid-template-columns:repeat(3,1fr);gap:6px}
 .cmpbar button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 4px;font-weight:700;font-size:13px;min-width:0}
@@ -230,7 +231,7 @@ try{var sv=localStorage.getItem('sprite-tracker-skin'); if(sv==='auto'||SKINS.in
 document.documentElement.setAttribute('data-skin',skinChoice==='auto'?autoSkin(new Date()):skinChoice);
 </script>
 <div class="wrap">
-  <div class="bannerbox" id="bannerbox" hidden><img class="banner" id="banner" alt="" width="1200" height="360"><canvas id="fx" aria-hidden="true"></canvas></div>
+  <div class="bannerbox" id="bannerbox" hidden><img class="banner" id="banner" alt="" width="1200" height="360"><video id="bvid" muted loop playsinline preload="none" aria-hidden="true" hidden></video><canvas id="fx" aria-hidden="true"></canvas></div>
   <div class="players" id="players" role="group" aria-label="Player"></div>
   <div class="pmanage" id="pmanage" hidden>
     <div class="prow"><label for="pname">Player name</label><input id="pname" type="text" maxlength="20" autocomplete="off"><button id="psave" type="button">Save name</button></div>
@@ -594,6 +595,22 @@ function tickFx(ts){
     const y=(b.y+Math.sin(t*1.7+b.ph)*b.amp)*H, flap=.35+.65*Math.abs(Math.sin(t*9+b.ph)), sc=b.s*k;
     ctx.save(); ctx.translate(b.x*W,y); ctx.scale(sc*(b.v<0?-1:1),sc*flap); ctx.translate(-12,-6); ctx.fillStyle='#0b0512'; ctx.fill(BATP); ctx.restore(); }
 }
+/* Some themes have a short silent video for the banner. The still picture shows until the video is playing, and stays if the phone won't play it. */
+const BANNER_VIDEO={trippy:'banner-trippy.mp4'};
+function setBannerVideo(skin){
+  const v=$('bvid'), src=BANNER_VIDEO[skin]||'';
+  const still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!src||still){ v.pause(); v.hidden=true; if(v.getAttribute('src')){ v.removeAttribute('src'); v.load(); } return; }
+  if(v.getAttribute('src')!==src){ v.hidden=true; v.setAttribute('src',src); }
+  v.muted=true; const pr=v.play(); if(pr&&pr.catch) pr.catch(()=>{});
+}
+(function(){
+  const v=$('bvid');
+  v.addEventListener('playing',()=>{ v.hidden=false; startFx(''); });
+  v.addEventListener('error',()=>{ v.hidden=true; });
+  if('IntersectionObserver' in window) new IntersectionObserver(es=>{ es.forEach(e=>{ if(!v.getAttribute('src')) return; if(e.isIntersecting){ const pr=v.play(); if(pr&&pr.catch) pr.catch(()=>{}); } else v.pause(); }); }).observe($('bannerbox'));
+  document.addEventListener('visibilitychange',()=>{ if(!v.getAttribute('src')) return; if(document.hidden) v.pause(); else { const pr=v.play(); if(pr&&pr.catch) pr.catch(()=>{}); } });
+})();
 function applySkin(){
   const actual=skinChoice==='auto'?autoSkin(new Date()):skinChoice;
   document.documentElement.setAttribute('data-skin',actual);
@@ -601,6 +618,7 @@ function applySkin(){
   if(actual==='classic'){ box.hidden=true; }
   else{ const src='banner-'+actual+'.png'; if(img.getAttribute('src')!==src) img.setAttribute('src',src); box.hidden=false; }
   startFx(actual==='classic'?'':actual);
+  setBannerVideo(actual);
   $('deco').innerHTML=DECO[actual]?'<svg viewBox="0 0 16 16" aria-hidden="true">'+DECO[actual]+'</svg>':'';
 }
 (function(){
