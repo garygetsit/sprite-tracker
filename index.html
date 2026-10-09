@@ -176,6 +176,12 @@ table.cmp{border-collapse:collapse;width:100%;font-size:14px}
 .prow button.warn{border-color:var(--v-bounty);color:var(--v-bounty)}
 #pmsg{margin:0;font-size:13px;color:var(--muted)}
 #pmsg:empty{display:none}
+.soon{margin-top:22px;border:1px dashed var(--line);border-radius:14px;padding:12px;display:grid;gap:10px}
+.soon h2{font-family:var(--display);font-weight:400;font-size:19px;margin:0}
+.soon .sitem{display:grid;grid-template-columns:56px minmax(0,1fr);gap:12px;align-items:center}
+.soon img{width:56px;height:56px;border-radius:12px;object-fit:cover;border:1px solid var(--line)}
+.soon b{display:block}
+.soon span{color:var(--muted);font-size:13px}
 .foot .btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .foot label{font-weight:700}
 .foot select{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-weight:600;max-width:100%}
@@ -244,6 +250,7 @@ document.documentElement.setAttribute('data-skin',skinChoice==='auto'?autoSkin(n
 
   <div class="list" id="list"></div>
 
+  <div class="soon" id="soon" hidden></div>
   <div class="foot">
     <div class="row"><span id="status">Tap a variant once for collected, again for mastered (a crown), a third time to clear. Tap a sprite's name for its power and backstory.</span>
       <span class="btns"><label for="skin">Theme</label><select id="skin"></select><button id="reset" type="button">Clear all marks</button></span></div>
@@ -300,7 +307,7 @@ const VBONUS={'Gold':'Extra XP from eliminations.','Gummy':'+10% Sprite Dust whe
  'Quack':'Shares 50% of its Sprite XP with your other Sprites. A Mastery reward.','Cheat Master':'Any input works on Cheat Code panels.',
  'Loot Hacker':'Better odds of spawning items from your Loot Hacks.','Bounty Hunter':'Chance to find Sprites when you eliminate opponents.',
  'Trick or Treat':'Chance to spawn candy when you open containers.'};
-const PICS=new Set(["8-bit", "adventure", "air", "aura", "batman", "birthday", "blinky", "boss", "burnt-peanut", "bush", "crash-bandicoot", "crown", "demon", "dream", "duck", "dumpster-dive", "earth", "fire", "fishy", "ghost", "grim", "ironmouse", "jackrabbit", "john-wick", "jonesy", "killswitch", "king", "klombo", "lootin-llama", "mega-man", "morgana", "onigiri", "overshield", "peeky-peely", "pollo", "pond", "punk", "seven", "shadow", "sonic", "spooky-dash", "storm-scout", "striker", "tails", "the-deer", "vampire", "vini-jr", "water", "x-ray", "zero-point"]);   // sprite families that have a picture in img/
+const PICS=new Set(["8-bit", "adventure", "air", "aura", "batman", "birthday", "blinky", "boss", "burnt-peanut", "bush", "crash-bandicoot", "crown", "demon", "dream", "duck", "dumpster-dive", "earth", "fire", "fishy", "ghost", "grim", "honey", "ironmouse", "jackrabbit", "john-wick", "jonesy", "killswitch", "king", "klombo", "lootin-llama", "mega-man", "morgana", "obsession", "onigiri", "overshield", "peeky-peely", "pollo", "pond", "punk", "seven", "shadow", "sonic", "spooky-dash", "storm-scout", "striker", "tails", "the-deer", "vampire", "vini-jr", "water", "x-ray", "zero-point"]);   // sprite families that have a picture in img/
 const pic=(f,cls)=>PICS.has(f.key)?`<img class="${cls}" src="img/${f.key}.webp" alt="" width="96" height="96" loading="lazy">`:'';
 const openInfo=new Set();
 function infoHtml(f){
@@ -381,7 +388,18 @@ function renderCompare(){
   if(!any) html+=`<div class="empty">${cmpFilter==='none'?'There is no sprite here that nobody has.':cmpFilter==='some'?'No differences here. Everyone has the same sprites.':'No sprites match these filters.'}</div>`;
   $('list').innerHTML=html;
 }
+/* Sprites that are announced but not out yet. Each one drops off this list by itself once it appears in the sprite list. */
+const UPCOMING=[
+ {key:'honey',name:'Honey Sprite',when:'October 15',what:'Sends bees after enemies who damage you. A Design-A-Sprite contest winner.'},
+ {key:'obsession',name:'Obsession Sprite',when:'October 15',what:'One Wish Willow helps you collect other Sprites. From the film Obsession.'}
+];
+function renderSoon(){
+  const left=UPCOMING.filter(u=>!FAMS.some(f=>f.key===u.key)), box=$('soon');
+  box.hidden=!left.length;
+  box.innerHTML=left.length?'<h2>Coming soon</h2>'+left.map(u=>`<div class="sitem">${PICS.has(u.key)?`<img src="img/${u.key}.webp" alt="" width="96" height="96" loading="lazy">`:'<span></span>'}<div><b>${esc(u.name)}</b><span>Arrives ${esc(u.when)}. ${esc(u.what)}</span></div></div>`).join(''):'';
+}
 function render(){
+  renderSoon();
   if(profiles.length<2) compare=false;
   document.querySelector('.wrap').classList.toggle('cmpmode',compare);
   if(compare){ renderCompare(); return; }
