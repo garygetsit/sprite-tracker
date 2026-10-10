@@ -286,7 +286,7 @@ document.documentElement.setAttribute('data-skin',skinChoice==='auto'?autoSkin(n
   <div class="soon" id="soon" hidden></div>
   <div class="foot">
     <div class="row"><span id="status">Tap a variant once for collected, again for mastered (a crown), a third time to clear. Tap a sprite's name for its power and backstory.</span>
-      <span class="btns"><label for="skin">Theme</label><select id="skin"></select><button id="reset" type="button">Clear all marks</button></span></div>
+      <span class="btns"><label for="skin">Theme</label><select id="skin"></select><button id="reset" type="button">Clear all marks</button><button id="exitapp" type="button">Exit app</button></span></div>
     <div><span id="asof">List last updated 2026-10-08.</span> The list is checked for new sprites every day. <span id="note">Honey and Obsession Sprites arrive October 15 and are not listed yet.</span> Sprite list from <a href="https://fortnite.gg/sprites" target="_blank" rel="noopener">Fortnite.GG</a>.</div>
     <div>App created by Gary Gesell and Claude.<span id="visits"></span></div>
     <div>Visits are counted anonymously with GoatCounter. No names, sprite lists or personal details are collected.</div>
@@ -920,6 +920,15 @@ renderPlayers();
 
 render();
 loadCatalog();
+/* ---- Exit button. A web page can only close itself in some cases, so fall back to telling the person how to leave. ---- */
+$('exitapp').addEventListener('click',()=>{
+  setStatus('Closing\u2026 Your marks are saved.');
+  try{ window.close(); }catch(e){}
+  setTimeout(()=>{ if(document.visibilityState!=='visible') return;
+    try{ if(history.length>1){ history.back(); } }catch(e){}
+    setTimeout(()=>{ if(document.visibilityState==='visible') setStatus('Your marks are saved. This phone will not let the app close itself, so press the Home button or swipe up from the bottom to leave.'); },500);
+  },400);
+});
 /* ---- anonymous visit counting (GoatCounter). ---- */
 window.addEventListener('appinstalled',()=>{ try{ window.goatcounter.count({path:'installed',title:'Added to home screen',event:true}); }catch(e){} });
 (function(){
