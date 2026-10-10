@@ -149,6 +149,12 @@ h1{font-family:var(--title,var(--display));font-size:var(--title-size,26px);lett
 .cmpbar button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 4px;font-weight:700;font-size:13px;min-width:0}
 .cmpbar button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
 .cmpmode .cmpbar{display:grid}
+.cmpwho{display:none;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px;font-size:13px;color:var(--muted)}
+.cmpmode .cmpwho{display:flex}
+.cmpwho button{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--bg);color:var(--muted);border-radius:99px;padding:6px 12px;font-weight:700;font-size:13px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmpwho button .ck{font-weight:800;visibility:hidden}
+.cmpwho button[aria-pressed="true"]{background:var(--have-bg);border-color:var(--have);color:var(--fg)}
+.cmpwho button[aria-pressed="true"] .ck{visibility:visible;color:var(--have)}
 .cmpmode .tabs,.cmpmode .score,.cmpmode .bar,.cmpmode #reset{display:none}
 .board{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:10px}
 .board h2{font-family:var(--display);font-weight:400;font-size:19px;margin:0}
@@ -264,6 +270,7 @@ document.documentElement.setAttribute('data-skin',skinChoice==='auto'?autoSkin(n
       <button type="button" data-cmp="some" aria-pressed="false">Only some have</button>
       <button type="button" data-cmp="none" aria-pressed="false">Nobody has</button>
     </div>
+    <div class="cmpwho" id="cmpwho" role="group" aria-label="Players to compare"></div>
   </div>
 
   <div class="filters">
@@ -372,6 +379,10 @@ loadMarks();
 const CROWN='<svg class="crown" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 11.500h12l1-7-3.700 2.800L8 2 4.700 7.300 1 4.500zM2.300 12.800h11.400v1.700H2.300z"/></svg>';
 let tab='all', q='', season='', variant='';
 let compare=false, cmpFilter='all';
+const CMPOFF='sprite-tracker-cmpoff';
+let cmpOff=new Set();
+try{ JSON.parse(localStorage.getItem(CMPOFF)||'[]').forEach(id=>typeof id==='string'&&cmpOff.add(id)); }catch(e){}
+function cmpPlayers(){ let on=profiles.filter(pr=>!cmpOff.has(pr.id)); if(on.length<2){ cmpOff.clear(); on=profiles.slice(); } return on; }
 try{ const t=localStorage.getItem(LS+'-tab'); if(['all','need','have','tom','mast'].includes(t)) tab=t; }catch(e){}
 
 const $=id=>document.getElementById(id);
@@ -386,7 +397,9 @@ function marksFor(pr){
   return {o,m};
 }
 function renderCompare(){
-  const data=profiles.map(pr=>Object.assign({pr},marksFor(pr)));
+  const on=cmpPlayers();
+  const data=on.map(pr=>Object.assign({pr},marksFor(pr)));
+  $('cmpwho').innerHTML='<span>Comparing:</span>'+profiles.map(pr=>`<button type="button" data-pid="${esc(pr.id)}" aria-pressed="${!cmpOff.has(pr.id)}"><span class="ck">\u2713</span>${esc(pr.name)}</button>`).join('');
   document.querySelectorAll('#cmpbar button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.cmp===cmpFilter));
   let html='<section class="board"><h2>Scoreboard</h2>';
   data.forEach(d=>{ let h=0,m=0; ALL_IDS.forEach(id=>{ if(d.o.has(id))h++; if(d.m.has(id))m++; });
@@ -860,6 +873,11 @@ $('players').addEventListener('click',e=>{
 });
 function saveName(){ const v=$('pname').value.trim().slice(0,20); if(!v){ pmsg('Type a name first.'); return; }
   profiles.find(x=>x.id===active).name=v; saveProfiles(); renderPlayers(); pmsg('Name saved.'); }
+$('cmpwho').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; const id=b.dataset.pid;
+  if(cmpOff.has(id)) cmpOff.delete(id);
+  else{ if(cmpPlayers().length<=2){ setStatus('Keep at least two players switched on to compare.'); return; } cmpOff.add(id); }
+  try{ localStorage.setItem(CMPOFF,JSON.stringify([...cmpOff])); }catch(e){}
+  const n=cmpPlayers().length; setStatus('Comparing '+n+' of '+profiles.length+' players.'); render(); });
 $('cmpbar').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; cmpFilter=b.dataset.cmp; render(); });
 $('psave').addEventListener('click',saveName);
 $('pname').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); saveName(); } });
