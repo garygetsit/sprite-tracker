@@ -155,7 +155,7 @@ h1{font-family:var(--title,var(--display));font-size:var(--title-size,26px);lett
 .cmpwho button .ck{font-weight:800;visibility:hidden}
 .cmpwho button[aria-pressed="true"]{background:var(--have-bg);border-color:var(--have);color:var(--fg)}
 .cmpwho button[aria-pressed="true"] .ck{visibility:visible;color:var(--have)}
-.cmpmode .tabs,.cmpmode .score,.cmpmode .bar,.cmpmode #reset{display:none}
+.cmpmode .tabs,.cmpmode .score,.cmpmode .bar{display:none}
 .board{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:10px}
 .board h2{font-family:var(--display);font-weight:400;font-size:19px;margin:0}
 .brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:baseline}
@@ -286,7 +286,7 @@ document.documentElement.setAttribute('data-skin',skinChoice==='auto'?autoSkin(n
   <div class="soon" id="soon" hidden></div>
   <div class="foot">
     <div class="row"><span id="status">Tap a variant once for collected, again for mastered (a crown), a third time to clear. Tap a sprite's name for its power and backstory.</span>
-      <span class="btns"><label for="skin">Theme</label><select id="skin"></select><button id="reset" type="button">Clear all marks</button><button id="exitapp" type="button">Exit app</button></span></div>
+      <span class="btns"><label for="skin">Theme</label><select id="skin"></select><button id="exitapp" type="button">Exit app</button></span></div>
     <div><span id="asof">List last updated 2026-10-08.</span> The list is checked for new sprites every day. <span id="note">Honey and Obsession Sprites arrive October 15 and are not listed yet.</span> Sprite list from <a href="https://fortnite.gg/sprites" target="_blank" rel="noopener">Fortnite.GG</a>.</div>
     <div>App created by Gary Gesell and Claude.<span id="visits"></span></div>
     <div>Visits are counted anonymously with GoatCounter. No names, sprite lists or personal details are collected.</div>
@@ -524,14 +524,6 @@ document.addEventListener('click',e=>{
 $('q').addEventListener('input',e=>{q=e.target.value;render();});
 $('season').addEventListener('change',e=>{season=e.target.value;render();});
 vsel.addEventListener('change',e=>{variant=e.target.value;render();});
-let armed=null;
-$('reset').addEventListener('click',()=>{
-  const b=$('reset');
-  if(!armed){ b.textContent='Tap again to clear all marks'; b.classList.add('warn');
-    armed=setTimeout(()=>{armed=null;b.textContent='Clear all marks';b.classList.remove('warn');},4000); return; }
-  clearTimeout(armed); armed=null; b.textContent='Clear all marks'; b.classList.remove('warn');
-  owned=new Set(); mastered=new Set(); changed(); render();
-});
 
 const SKIN_LABELS={auto:'Auto (follows the holidays)',classic:'Classic',newyear:'New Year\u2019s',valentine:'Valentine\u2019s Day',stpatrick:'St. Patrick\u2019s Day',easter:'Easter',july4:'Fourth of July',halloween:'Halloween',thanksgiving:'Thanksgiving',christmas:'Christmas',trippy:'Trippy sprites'};
 const DECO={
