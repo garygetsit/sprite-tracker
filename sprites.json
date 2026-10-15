@@ -10,7 +10,8 @@
     "Cheat Master",
     "Loot Hacker",
     "Bounty Hunter",
-    "Trick or Treat"
+    "Trick or Treat",
+    "Quack"
    ],
    "p": "Recovers some Health or Shield a short time after you take damage. Heals more with each level.",
    "g": "Cheat Code panels; shows up more in high, mountainous areas. Can be picked as a starter Sprite.",
@@ -26,7 +27,8 @@
     "Cheat Master",
     "Loot Hacker",
     "Bounty Hunter",
-    "Trick or Treat"
+    "Trick or Treat",
+    "Quack"
    ],
    "p": "Upgrades a random item in your inventory each time it levels up.",
    "g": "Cheat Code panels; shows up more in high, mountainous areas. Can be picked as a starter Sprite.",
@@ -42,7 +44,8 @@
     "Cheat Master",
     "Loot Hacker",
     "Bounty Hunter",
-    "Trick or Treat"
+    "Trick or Treat",
+    "Quack"
    ],
    "p": "Grows a bush on you after a while. At max level you also get a bush after an elimination.",
    "g": "Cheat Code panels. Can be picked as a starter Sprite.",
@@ -229,7 +232,8 @@
     "Cheat Master",
     "Loot Hacker",
     "Bounty Hunter",
-    "Trick or Treat"
+    "Trick or Treat",
+    "Quack"
    ],
    "p": "Grants random items at each level. It only levels up when you use healing and shield items.",
    "g": "Very rare. Cheat Code panels; shows up more in high, mountainous areas.",
@@ -261,7 +265,8 @@
     "Cheat Master",
     "Loot Hacker",
     "Bounty Hunter",
-    "Trick or Treat"
+    "Trick or Treat",
+    "Quack"
    ],
    "p": "Jump in mid-air to dash and phase through some objects. Charges refill over time.",
    "g": "Added for Fortnitemares 2026.",
@@ -394,6 +399,38 @@
    "p": "Food gives bonus healing. You find food when jumping out of hiding spots such as dumpsters.",
    "g": "Added for Fortnitemares 2026.",
    "o": "Design-A-Sprite contest winner, designed by StinkyPrincessGoose."
+  },
+  {
+   "n": "Honey",
+   "s": "C7 S4",
+   "r": "",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ],
+   "p": "Spawns bees where your ranged shots hit enemies.",
+   "g": "",
+   "o": "A Design-A-Sprite contest winner."
+  },
+  {
+   "n": "One Wish Willow",
+   "s": "C7 S4",
+   "r": "",
+   "v": [
+    "Base",
+    "Gold",
+    "Cheat Master",
+    "Loot Hacker",
+    "Bounty Hunter",
+    "Trick or Treat"
+   ],
+   "p": "Takes other players' equipped Sprites when you eliminate them.",
+   "g": "",
+   "o": "From the film Obsession."
   },
   {
    "n": "Water",
@@ -763,6 +800,6 @@
    "o": "John Wick, from the film series."
   }
  ],
- "updated": "2026-10-08",
- "note": "Honey and Obsession Sprites arrive October 15 and are not listed yet."
+ "updated": "2026-10-15",
+ "note": ""
 }
