@@ -342,7 +342,9 @@ const VBONUS={'Gold':'Extra XP from eliminations.','Gummy':'+10% Sprite Dust whe
  'Loot Hacker':'Better odds of spawning items from your Loot Hacks.','Bounty Hunter':'Chance to find Sprites when you eliminate opponents.',
  'Trick or Treat':'Chance to spawn candy when you open containers.'};
 const PICS=new Set(["8-bit", "adventure", "air", "aura", "batman", "birthday", "blinky", "boss", "burnt-peanut", "bush", "crash-bandicoot", "crown", "demon", "dream", "duck", "dumpster-dive", "earth", "fire", "fishy", "ghost", "grim", "honey", "ironmouse", "jackrabbit", "john-wick", "jonesy", "killswitch", "king", "klombo", "lootin-llama", "mega-man", "morgana", "obsession", "onigiri", "overshield", "peeky-peely", "pollo", "pond", "punk", "seven", "shadow", "sonic", "spooky-dash", "storm-scout", "striker", "tails", "the-deer", "vampire", "vini-jr", "water", "x-ray", "zero-point"]);   // sprite families that have a picture in img/
-const pic=(f,cls)=>PICS.has(f.key)?`<img class="${cls}" src="img/${f.key}.webp" alt="" width="96" height="96" loading="lazy">`:'';
+const IMGV={obsession:2};   // bump a number here when a picture is replaced, so phones load the new one
+const isrc=k=>`img/${k}.webp`+(IMGV[k]?`?v=${IMGV[k]}`:'');
+const pic=(f,cls)=>PICS.has(f.key)?`<img class="${cls}" src="${isrc(f.key)}" alt="" width="96" height="96" loading="lazy">`:'';
 const openInfo=new Set();
 function infoHtml(f){
   let h='<div class="info" id="info-'+f.key+'">'+pic(f,'bigpic');
@@ -436,7 +438,7 @@ const UPCOMING=[
 function renderSoon(){
   const left=UPCOMING.filter(u=>!FAMS.some(f=>f.key===u.key)), box=$('soon');
   box.hidden=!left.length;
-  box.innerHTML=left.length?'<h2>Coming soon</h2>'+left.map(u=>`<div class="sitem">${PICS.has(u.key)?`<img src="img/${u.key}.webp" alt="" width="96" height="96" loading="lazy">`:'<span></span>'}<div><b>${esc(u.name)}</b><span>Arrives ${esc(u.when)}. ${esc(u.what)}</span></div></div>`).join(''):'';
+  box.innerHTML=left.length?'<h2>Coming soon</h2>'+left.map(u=>`<div class="sitem">${PICS.has(u.key)?`<img src="${isrc(u.key)}" alt="" width="96" height="96" loading="lazy">`:'<span></span>'}<div><b>${esc(u.name)}</b><span>Arrives ${esc(u.when)}. ${esc(u.what)}</span></div></div>`).join(''):'';
 }
 function render(){
   renderSoon();
