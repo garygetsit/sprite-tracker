@@ -1,6 +1,149 @@
 {
  "families": [
   {
+   "n": "Plundarrgh",
+   "s": "Treasure Hunters",
+   "r": "Mythic",
+   "v": [
+    "Base",
+    "Fortune"
+   ],
+   "p": "Opening a chest gives you a burst of Pickaxe and movement speed.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": ""
+  },
+  {
+   "n": "Sweet Dreams",
+   "s": "Treasure Hunters",
+   "r": "Mythic",
+   "v": [
+    "Base"
+   ],
+   "p": "Drops a random item each time it levels up. At max level it gives Mythic loot.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": ""
+  },
+  {
+   "n": "Transponder Snail",
+   "s": "Treasure Hunters",
+   "r": "Mythic",
+   "v": [
+    "Base"
+   ],
+   "p": "Gives extra resources when you pick them up. Teammates carrying it get some too, more each level.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": "The Den Den Mushi phone snail from One Piece."
+  },
+  {
+   "n": "Exmarks",
+   "s": "Treasure Hunters",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Fortune"
+   ],
+   "p": "Reveals nearby Treasure Maps and Wanted Posters. At max level it spawns a Treasure Map.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": ""
+  },
+  {
+   "n": "Chester",
+   "s": "Treasure Hunters",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Fortune"
+   ],
+   "p": "Chests can spawn extra loot, and you take no fall damage.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": ""
+  },
+  {
+   "n": "Lil' Squibbly",
+   "s": "Treasure Hunters",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Fortune"
+   ],
+   "p": "Jump into a fishing hole to fish it automatically, with bonus loot. More loot each level.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": ""
+  },
+  {
+   "n": "Lil' Flacko",
+   "s": "Treasure Hunters",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Fortune"
+   ],
+   "p": "Landing creates a small shockwave that knocks enemies back. Stronger each level.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests. Can also drop from the A$AP Rocky boss.",
+   "o": "Part of the A$AP Rocky collab (Flacko is one of his nicknames)."
+  },
+  {
+   "n": "Wayfinder",
+   "s": "Treasure Hunters",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Fortune"
+   ],
+   "p": "Reveals nearby Sprites and gives extra loot from Buried Chests.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": ""
+  },
+  {
+   "n": "Kelper",
+   "s": "Treasure Hunters",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Fortune"
+   ],
+   "p": "Heals you over time while you're in water. Heals more each level.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": ""
+  },
+  {
+   "n": "Halfpeel'd",
+   "s": "Treasure Hunters",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Fortune",
+    "Cursed"
+   ],
+   "p": "Marks eliminations on your map. The range grows each level.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": "Half Peely, half skeleton."
+  },
+  {
+   "n": "Re-Pete",
+   "s": "Treasure Hunters",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Fortune"
+   ],
+   "p": "Faster reloads, with a chance to get ammo back. Both improve each level.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": ""
+  },
+  {
+   "n": "Barry O'Fish",
+   "s": "Treasure Hunters",
+   "r": "Rare",
+   "v": [
+    "Base",
+    "Fortune"
+   ],
+   "p": "Sprinting in water uses less stamina. At max level you get a Slap effect.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": ""
+  },
+  {
    "n": "Jonesy",
    "s": "C7 S4",
    "r": "Rare",
@@ -800,6 +943,6 @@
    "o": "John Wick, from the film series."
   }
  ],
- "updated": "2026-10-15",
- "note": ""
+ "updated": "2026-11-03",
+ "note": "Gold versions of the Treasure Hunters sprites return November 12. Cursed versions (other than Halfpeel'd) are coming later."
 }
