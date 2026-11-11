@@ -6,7 +6,8 @@
    "r": "Mythic",
    "v": [
     "Base",
-    "Fortune"
+    "Fortune",
+    "Cursed"
    ],
    "p": "Opening a chest gives you a burst of Pickaxe and movement speed.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -40,7 +41,8 @@
    "r": "Legendary",
    "v": [
     "Base",
-    "Fortune"
+    "Fortune",
+    "Cursed"
    ],
    "p": "Reveals nearby Treasure Maps and Wanted Posters. At max level it spawns a Treasure Map.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -52,7 +54,8 @@
    "r": "Legendary",
    "v": [
     "Base",
-    "Fortune"
+    "Fortune",
+    "Cursed"
    ],
    "p": "Chests can spawn extra loot, and you take no fall damage.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -64,7 +67,8 @@
    "r": "Legendary",
    "v": [
     "Base",
-    "Fortune"
+    "Fortune",
+    "Cursed"
    ],
    "p": "Jump into a fishing hole to fish it automatically, with bonus loot. More loot each level.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -76,11 +80,25 @@
    "r": "Legendary",
    "v": [
     "Base",
-    "Fortune"
+    "Fortune",
+    "Cursed"
    ],
    "p": "Landing creates a small shockwave that knocks enemies back. Stronger each level.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests. Can also drop from the A$AP Rocky boss.",
    "o": "Part of the A$AP Rocky collab (Flacko is one of his nicknames)."
+  },
+  {
+   "n": "Lil' Uzi Vert Jr.",
+   "s": "Treasure Hunters",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Fortune",
+    "Cursed"
+   ],
+   "p": "Restoring your shields sets off a Chug Splash. The cooldown gets shorter each level.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests. Arrived on Lil Uzi Vert's Captain's Day.",
+   "o": "Part of the Lil Uzi Vert collab."
   },
   {
    "n": "Wayfinder",
@@ -88,7 +106,8 @@
    "r": "Epic",
    "v": [
     "Base",
-    "Fortune"
+    "Fortune",
+    "Cursed"
    ],
    "p": "Reveals nearby Sprites and gives extra loot from Buried Chests.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -125,7 +144,8 @@
    "r": "Rare",
    "v": [
     "Base",
-    "Fortune"
+    "Fortune",
+    "Cursed"
    ],
    "p": "Faster reloads, with a chance to get ammo back. Both improve each level.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -137,7 +157,8 @@
    "r": "Rare",
    "v": [
     "Base",
-    "Fortune"
+    "Fortune",
+    "Cursed"
    ],
    "p": "Sprinting in water uses less stamina. At max level you get a Slap effect.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -943,6 +964,6 @@
    "o": "John Wick, from the film series."
   }
  ],
- "updated": "2026-11-03",
- "note": "Gold versions of the Treasure Hunters sprites return November 12. Cursed versions (other than Halfpeel'd) are coming later."
+ "updated": "2026-11-10",
+ "note": "Cursed Kelper is in the game files but hasn't been released. Gold versions of the Treasure Hunters sprites are due back later in November."
 }
