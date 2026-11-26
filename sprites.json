@@ -7,7 +7,8 @@
    "v": [
     "Base",
     "Fortune",
-    "Cursed"
+    "Cursed",
+    "Gold"
    ],
    "p": "Opening a chest gives you a burst of Pickaxe and movement speed.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -42,7 +43,8 @@
    "v": [
     "Base",
     "Fortune",
-    "Cursed"
+    "Cursed",
+    "Gold"
    ],
    "p": "Reveals nearby Treasure Maps and Wanted Posters. At max level it spawns a Treasure Map.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -55,7 +57,8 @@
    "v": [
     "Base",
     "Fortune",
-    "Cursed"
+    "Cursed",
+    "Gold"
    ],
    "p": "Chests can spawn extra loot, and you take no fall damage.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -68,7 +71,8 @@
    "v": [
     "Base",
     "Fortune",
-    "Cursed"
+    "Cursed",
+    "Gold"
    ],
    "p": "Jump into a fishing hole to fish it automatically, with bonus loot. More loot each level.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -81,7 +85,8 @@
    "v": [
     "Base",
     "Fortune",
-    "Cursed"
+    "Cursed",
+    "Gold"
    ],
    "p": "Landing creates a small shockwave that knocks enemies back. Stronger each level.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests. Can also drop from the A$AP Rocky boss.",
@@ -94,7 +99,8 @@
    "v": [
     "Base",
     "Fortune",
-    "Cursed"
+    "Cursed",
+    "Gold"
    ],
    "p": "Restoring your shields sets off a Chug Splash. The cooldown gets shorter each level.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests. Arrived on Lil Uzi Vert's Captain's Day.",
@@ -107,7 +113,8 @@
    "v": [
     "Base",
     "Fortune",
-    "Cursed"
+    "Cursed",
+    "Gold"
    ],
    "p": "Reveals nearby Sprites and gives extra loot from Buried Chests.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -119,7 +126,9 @@
    "r": "Epic",
    "v": [
     "Base",
-    "Fortune"
+    "Fortune",
+    "Cursed",
+    "Gold"
    ],
    "p": "Heals you over time while you're in water. Heals more each level.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -132,7 +141,8 @@
    "v": [
     "Base",
     "Fortune",
-    "Cursed"
+    "Cursed",
+    "Gold"
    ],
    "p": "Marks eliminations on your map. The range grows each level.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -145,7 +155,8 @@
    "v": [
     "Base",
     "Fortune",
-    "Cursed"
+    "Cursed",
+    "Gold"
    ],
    "p": "Faster reloads, with a chance to get ammo back. Both improve each level.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
@@ -158,10 +169,64 @@
    "v": [
     "Base",
     "Fortune",
-    "Cursed"
+    "Cursed",
+    "Gold"
    ],
    "p": "Sprinting in water uses less stamina. At max level you get a Slap effect.",
    "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": ""
+  },
+  {
+   "n": "Sir Oscar the Second",
+   "s": "Treasure Hunters",
+   "r": "Legendary",
+   "v": [
+    "Base",
+    "Fortune",
+    "Cursed",
+    "Gold"
+   ],
+   "p": "Boosts Pickaxe damage, and gives a quick speed boost when your Shield breaks.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": "From One Piece."
+  },
+  {
+   "n": "Squiplash",
+   "s": "Treasure Hunters",
+   "r": "Epic",
+   "v": [
+    "Base",
+    "Fortune",
+    "Cursed",
+    "Gold"
+   ],
+   "p": "Drops a Healing Smoke Bomb when your health is low.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": ""
+  },
+  {
+   "n": "Mini Miku",
+   "s": "Treasure Hunters",
+   "r": "Mythic",
+   "v": [
+    "Base",
+    "Fortune",
+    "Cursed",
+    "Gold"
+   ],
+   "p": "Gives you a Friendship Bubble when you emote with another player.",
+   "g": "Wanted Posters lead to buried Sprite Chests (dig them up with your pickaxe). Also found in chests.",
+   "o": "Hatsune Miku."
+  },
+  {
+   "n": "Zee",
+   "s": "Treasure Hunters",
+   "r": "Mythic",
+   "v": [
+    "Base"
+   ],
+   "p": "Gives you Zero Point dash charges that recharge over time.",
+   "g": "Secret rare. It only shows in the list once you have it; Lucky Locators or trades help.",
    "o": ""
   },
   {
@@ -964,6 +1029,6 @@
    "o": "John Wick, from the film series."
   }
  ],
- "updated": "2026-11-10",
- "note": "Cursed Kelper is in the game files but hasn't been released. Gold versions of the Treasure Hunters sprites are due back later in November."
+ "updated": "2026-11-26",
+ "note": ""
 }
